@@ -130,13 +130,13 @@ public class Steps extends BaseClass {
 	}
 	@When("Verify CRM & Sales section i displayed")
 	public void verify_crm_sales_section_i_displayed() {
-	 verifyElement(details.opp);
-	 verifyElement(details.pros);
-	 verifyElement(details.prop);
-	 verifyElement(details.sale);
-	 verifyElement(details.contract);
-	 verifyElement(details.help);
-	 verifyElement(details.know);
+		Assert.assertTrue(verifyElement(details.opp));
+		Assert.assertTrue (verifyElement(details.pros));
+		Assert.assertTrue (verifyElement(details.prop));
+		Assert.assertTrue (verifyElement(details.sale));
+		Assert.assertTrue (verifyElement(details.contract));
+		Assert.assertTrue	 (verifyElement(details.help));
+		Assert.assertTrue (verifyElement(details.know));
 	 
 	}
 	@When("user click the prospects customer module")
@@ -301,7 +301,7 @@ public class Steps extends BaseClass {
 		getParentWindow();
 	    switchToChildWindow();
 	    Assert.assertTrue(getUrl().contains("register"));
-	    verifyElement(details.email);
+	    Assert.assertTrue(verifyElement(details.email));
 	}
 
 
