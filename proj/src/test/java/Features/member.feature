@@ -76,7 +76,7 @@ And User change the duration as "5"
 And User click the save btn
 Then the new data is saved successfully
 
-@Meenu
+
 Scenario: Verifying ThirdParties/contacts section
 When User clicks the thirdparty icon
 Then Third party page is displayed
@@ -87,7 +87,7 @@ And User select the mail option in the list
 And User click confirm btn
 Then The email page is open correctly
 
-@Meenu
+
 Scenario: Sending mail to vendor
 Given User is on email sending page
 When User select the template
@@ -98,7 +98,7 @@ And User draft the mail "Hi...Nice to meet you"
 And User click send email
 Then User received the warning messge
 
-@Meenu
+
 Scenario: Verifying particular Vendor details
 Given User is on vendor list page
 When User select the particular vendor

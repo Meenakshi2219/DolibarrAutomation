@@ -14,7 +14,7 @@ import io.cucumber.junit.CucumberOptions;
 glue= {"com.Stepdefenition"},
 plugin= {"pretty","html:target/report.html"},
 monochrome=true,
-tags="@Meenu"
+tags=""
 )
 public class Runner {
 	
