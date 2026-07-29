@@ -438,13 +438,13 @@ public class page {
 	@FindBy(xpath="//a[normalize-space()=\"Back to list\"]")
 	public WebElement list;
 	
-	@FindBy(xpath="//input[@id=\"cb1108\"]")
+	@FindBy(xpath="//input[@id=\"cb1126\"]")
 	public WebElement checkbox;
 	
 	@FindBy(xpath="//span[@id=\"select2-massaction-container\"]")
 	public WebElement vali;
 	
-	@FindBy(xpath="//ul[@id=\"select2-massaction-results\"]//li[normalize-space()=\"Assign a Tag\"]")
+	@FindBy(xpath="//ul[@id=\"select2-massaction-results\"]//li[text()=\"Assign a Tag\"]")
 	public WebElement tag;
 	
 	@FindBy(xpath="//input[@name=\"confirmmassaction\"]")
@@ -528,7 +528,7 @@ public class page {
 	@FindBy(xpath="//a[text()=\"Draft members\"]")
 	public WebElement draft;
 	
-	@FindBy(xpath="//input[@id=\"cb1143\"]")
+	@FindBy(xpath="//input[@id=\"cb1146\"]")
 	public WebElement idd;
 	
 	@FindBy(xpath="//ul[@id=\"select2-massaction-results\"]//li[normalize-space()=\"Terminate\"]")
@@ -537,7 +537,7 @@ public class page {
 	@FindBy(xpath="//a[text()=\"Validated members\"]")
 	public WebElement valimem;
 	
-	@FindBy(xpath="//input[@id=\"cb1125\"]")
+	@FindBy(xpath="//input[@id=\"cb1140\"]")
 	public WebElement selmem;
 	
 	@FindBy(xpath="//ul[@id=\"select2-massaction-results\"]//li[normalize-space()=\"Create subscription\"]")
@@ -549,19 +549,19 @@ public class page {
 	@FindBy(xpath="//select[@id=\"confirm\"]")
 	public WebElement drop6;
 	
-	@FindBy(xpath="//tr[@data-rowid=\"1125\"]//span[text()=\"Up to date\"]")
+	@FindBy(xpath="//tr[@data-rowid=\"1140\"]//span[text()=\"Up to date\"]")
 	public WebElement error7;
 	
 	@FindBy(xpath="//a[text()=\"Membership pending\"]")
 	public WebElement membership;
 	
-	@FindBy(xpath="//input[@id=\"cb1137\"]")
+	@FindBy(xpath="//input[@id=\"cb1128\"]")
 	public WebElement id3;
 	
 	@FindBy(xpath="//a[normalize-space()=\"Up-to-date\"]")
 	public WebElement uptodate;
 	
-	@FindBy(xpath="//input[@id=\"cb1135\"]")
+	@FindBy(xpath="//input[@id=\"cb1137\"]")
 	public WebElement upmem;
 	
 	@FindBy(xpath="//ul[@id=\"select2-massaction-results\"]//li[normalize-space()=\"Delete\"]")
@@ -573,7 +573,7 @@ public class page {
 	@FindBy(xpath="//span[text()=\"No record found\"]")
 	public WebElement rec;
 	
-	@FindBy(xpath="//input[@id=\"cb1123\"]")
+	@FindBy(xpath="//input[@id=\"cb1120\"]")
 	public WebElement id5;
 	
 	@FindBy(xpath="//a[text()=\"Terminated members\"]")
@@ -804,5 +804,362 @@ public class page {
 	
 	@FindBy(xpath="//span[@class=\"inline-block valignmiddle print-barre-liste\"]")
 	public WebElement links;
+	
+	//Commerce
+	
+	@FindBy(xpath="//a[@id=\"mainmenua_commercial\"]")
+	public WebElement commerce;
+	
+	@FindBy(xpath="//span[text()=\"Draft vendor proposals\"]")
+	public WebElement comheading1;
+	
+	@FindBy(xpath="//span[text()=\"Draft purchase orders\"]")
+	public WebElement comheading2;
+	
+	@FindBy(xpath="//a[@title=\"Vendor proposals\"]")
+	public WebElement venpropose;
+	
+	@FindBy(xpath="//th[text()=\"Statistics - Price requests\"]")
+	public WebElement venheading1;
+	
+	@FindBy(xpath="//th[text()=\"Open price requests \"]")
+	public WebElement venheading2;
+	
+	@FindBy(xpath="//th[text()=\"Latest 5 modified price requests\"]")
+	public WebElement venheading3;
+	
+	@FindBy(xpath="//a[text()=\"New price request\"]")
+	public WebElement newreq;
+	
+	@FindBy(xpath="(//a[@href=\"/comm/card.php?socid=9075\"])[1]")
+	public WebElement aaa;
+	
+	@FindBy(xpath="//div[@class=\"error\"]")
+	public WebElement erroraa;
+	
+	@FindBy(xpath="//span[text()=\"New price request\"]")
+	public WebElement newheading;
+	
+	@FindBy(xpath="//span[@id=\"select2-socid-container\"]")
+	public WebElement vendrop;
+	
+	@FindBy(xpath="//ul[@id=\"select2-socid-results\"]//li[text()=\"aaa \"]")
+	public WebElement venop;
+	
+	@FindBy(xpath="//span[@id=\"select2-cond_reglement_id-container\"]")
+	public WebElement terms;
+	
+	@FindBy(xpath="//ul[@id=\"select2-cond_reglement_id-results\"]//li[text()=\"30 days\"]")
+	public WebElement days;
+	
+	@FindBy(xpath="//ul[@id=\"select2-cond_reglement_id-results\"]//li[text()=\"Order\"]")
+	public WebElement order2;
+	
+	@FindBy(xpath="//span[@id=\"select2-selectmode_reglement_id-container\"]")
+	public WebElement method;
+	
+	@FindBy(xpath="//ul[@id=\"select2-selectmode_reglement_id-results\"]//li[text()=\"Cash\"]")
+	public WebElement cash;
+	
+	@FindBy(xpath="//ul[@id=\"select2-selectmode_reglement_id-results\"]//li[text()=\"Check\"]")
+	public WebElement check2;
+	
+	@FindBy(xpath="//button[text()=\"Now\"]")
+	public WebElement now;
+	
+	@FindBy(xpath="//span[@class=\"select2-selection select2-selection--multiple multiselect multiselectononeline minwidth100 widthcentpercentminusxx\"]")
+	public WebElement tags;
+	
+	@FindBy(xpath="//ul[@id=\"select2-categories-results\"]//li[text()=\"Advance\"]")
+	public WebElement advance;
+	
+	@FindBy(xpath="//input[@class=\"button marginleftonly marginrightonly button-save \"]")
+	public WebElement creatdraft;
+	
+	@FindBy(xpath="//div[@class=\"jnotify-message\"]")
+	public WebElement venerror;
+	
+	@FindBy(xpath="//select[@id=\"select_type\"]")
+	public WebElement typeven;
+	
+	@FindBy(xpath="//iframe[@title=\"Editor, dp_desc\"]")
+	public WebElement descframe;
+	
+	@FindBy(xpath="//body[@aria-label=\"Editor, dp_desc\"]")
+	public WebElement descframe2;
+	
+	@FindBy(xpath="//input[@name=\"qty\"]")
+	public WebElement quantity;
+	
+	@FindBy(xpath="//input[@name=\"remise_percent\"]")
+	public WebElement discount;
+	
+	@FindBy(xpath="//input[@name=\"price_ht\"]")
+	public WebElement price3;
+	
+	@FindBy(xpath="//input[@class=\"button reposition\"]")
+	public WebElement add;
+	
+	@FindBy(xpath="//a[text()=\"Validate\"]")
+	public WebElement validate2;
+	
+	@FindBy(xpath="//button[text()=\"Yes\"]")
+	public WebElement yes2;
+	
+	@FindBy(xpath="//a[@title=\"Contacts/Addresses\"]")
+	public WebElement contact;
+	
+	@FindBy(xpath="(//input[@class=\"button small\"])[1]")
+	public WebElement add2;
+	
+	@FindBy(xpath="//a[@id=\"note\"]")
+	public WebElement note2;
+	
+	@FindBy(xpath="(//span[@title=\"Edit\"])[1]")
+	public WebElement publicedit;
+	
+	@FindBy(xpath="//form//textarea[@id=\"note_public\"]")
+	public WebElement text2;
+	
+	@FindBy(xpath="//input[@class=\"smallpaddingimp nomargingtop nomarginbottom button \"]")
+	public WebElement notesave;
+	
+	@FindBy(xpath="//a[@title=\"Linked files\"]")
+	public WebElement link2;
+	
+	@FindBy(xpath="(//span[@class=\"fa fa-plus-circle valignmiddle btnTitle-icon\"])[1]")
+	public WebElement plusbtn;
+	
+	@FindBy(xpath="//input[@name=\"userfile[]\"]")
+	public WebElement uploadarea;
+	
+	@FindBy(xpath="//input[@name=\"sendit\"]")
+	public WebElement upload;
+	
+	@FindBy(xpath="//a[text()=\"Log\"]")
+	public WebElement log;
+	
+	@FindBy(xpath="//a[text()=\"Back to list\"]")
+	public WebElement backlist1;
+	
+	//list
+	
+	@FindBy(xpath="(//a[@title=\"List\"])[1]")
+	public WebElement venlist;
+	
+	@FindBy(xpath="//input[@id=\"cb1387\"]")
+	public WebElement listid1;
+	
+	@FindBy(xpath="//ul[@id=\"select2-massaction-results\"]//li[text()=\"Delete\"]")
+	public WebElement listdelete;
+	
+	@FindBy(xpath="//div[@class=\"jnotify-message\"]")
+	public WebElement errorlist;
+	
+	//Ven Statistic
+	
+	@FindBy(xpath="(//a[@title=\"Statistics\"])[1]")
+	public WebElement statistic;
+	
+	@FindBy(xpath="//span[text()=\"Vendor proposals statistics\"]")
+	public WebElement statheading;
+	
+	@FindBy(xpath="(//span[@class=\"select2-selection select2-selection--single flat widthcentpercentminusx maxwidth300\"])[1]")
+	public WebElement thirdparty;
+	
+	@FindBy(xpath="//ul[@id=\"select2-socid-results\"]//li[text()=\"Adem Demir\"]")
+	public WebElement thirdparty1;
+	
+	@FindBy(xpath="//span[@id=\"select2-typent_id-container\"]")
+	public WebElement thirdtype;
+	
+	@FindBy(xpath="//ul[@id=\"select2-typent_id-results\"]//li[text()=\"Other\"]")
+	public WebElement thirdtype2;
+	
+	@FindBy(xpath="//span[@id=\"select2-select_categ_categ_id-container\"]")
+	public WebElement tag1;
+	
+	@FindBy(xpath="//ul[@id=\"select2-select_categ_categ_id-results\"]//li[text()=\"Albunes\"]")
+	public WebElement tag2;
+	
+	@FindBy(xpath="//span[@class=\"select2-selection select2-selection--multiple multiselect multiselectononeline widthcentpercentminusx maxwidth300\"]")
+	public WebElement venpro;
+	
+	@FindBy(xpath="//ul[@id=\"select2-select_categ_propal_id-results\"]//li[text()=\"Advance\"]")
+	public WebElement venpo2;
+	
+	@FindBy(xpath="//span[@id=\"select2-object_status-container\"]")
+	public WebElement sta1;
+	
+	@FindBy(xpath="//ul[@id=\"select2-object_status-results\"]//li[text()=\"Accepted\"]")
+	public WebElement sta2;
+	
+	@FindBy(xpath="//input[@name=\"submit\"]")
+	public WebElement refresh;
+	
+	@FindBy(xpath="//a[text()=\"crm2.png\"]")
+	public WebElement uploadverify;
+	
+	@FindBy(xpath="//div[normalize-space()=\"New price is added\"]")
+	public WebElement notelist;
+	
+	//Purchase Order
+	
+	@FindBy(xpath="//a[@title=\"Purchase orders\"]")
+	public WebElement purchaseorder;
+	
+	@FindBy(xpath="//th[text()=\"Statistics - Purchase orders\"]")
+	public WebElement purchasestate;
+	
+	@FindBy(xpath="//th[text()=\"Draft orders\"]")
+	public WebElement neworderpurchase;
+	
+	@FindBy(xpath="//span[text()=\"Select a third party\"]")
+	public WebElement vendordrop;
+	
+	@FindBy(xpath="//ul[@id=\"select2-socid-results\"]//li[text()=\"agri \"]")
+	public WebElement agri;
+	
+	@FindBy(xpath="//textarea[@id=\"note_public\"]")
+	public WebElement pubnote;
+	
+	@FindBy(xpath="//textarea[@id=\"note_private\"]")
+	public WebElement prinote;
+	
+	@FindBy(xpath="//a[text()=\"New order\"]")
+	public WebElement newpurchase;
+	
+	@FindBy(xpath="//span[text()=\"New Purchase Order\"]")
+	public WebElement purchaseheading;
+	
+	@FindBy(xpath="//ul[@id=\"select2-categories-results\"]//li[text()=\"BSK\"]")
+	public WebElement bsk;
+	
+	@FindBy(xpath="//ul[@id=\"select2-categories-results\"]//li[text()=\"Penne\"]")
+	public WebElement pen;
+	
+	@FindBy(xpath="//a[text()=\"Events/Agenda\"]")
+	public WebElement agent;
+	
+	@FindBy(xpath="//a[text()=\"Validate and Approve\"]")
+	public WebElement approve;
+	
+	@FindBy(xpath="//a[@id=\"note\"]")
+	public WebElement note3;
+	
+	@FindBy(xpath="//div[normalize-space()=\"This is new note\"]")
+	public WebElement newnote;
+	
+	@FindBy(xpath="(//a[@class=\"paddingright valignmiddle\"])[1]")
+	public WebElement upcheck;
+	
+	//list
+	
+	@FindBy(xpath="//input[@id=\"cb4586\"]")
+	public WebElement purchaseid;
+	
+	@FindBy(xpath="//ul[@id=\"select2-massaction-results\"]//li[text()=\"Delete\"]")
+	public WebElement deletepurchase;
+	
+	@FindBy(xpath="//a[text()=\"Draft\"]")
+	public WebElement draftlink;
+	
+	@FindBy(xpath="//input[@id=\"cb878\"]")
+	public WebElement draftid;
+	
+	@FindBy(xpath="//ul[@id=\"select2-massaction-results\"]//li[text()=\"Validate and Approve\"]")
+	public WebElement validatepurchase;
+	
+	@FindBy(xpath="//a[@title=\"Validated\"]")
+	public WebElement validatepage;
+	
+	@FindBy(xpath="//span[text()=\"No record found\"]")
+	public WebElement norec;
+	
+	@FindBy(xpath="//a[@title=\"Approved\"]")
+	public WebElement approved;
+	
+	@FindBy(xpath="//input[@id=\"cb4587\"]")
+	public WebElement approvedid;
+	
+	@FindBy(xpath="//a[@title=\"Ordered\"]")
+	public WebElement ordered;
+	
+	@FindBy(xpath="//input[@id=\"cb4472\"]")
+	public WebElement orderid;
+	
+	@FindBy(xpath="//a[@title=\"Canceled\"]")
+	public WebElement canceled;
+	
+	@FindBy(xpath="//input[@id=\"cb2733\"]")
+	public WebElement cancelid;
+	
+	@FindBy(xpath="//a[@title=\"Refused\"]")
+	public WebElement refused;
+	
+	@FindBy(xpath="(//a[text()=\"Statistics\"])[2]")
+	public WebElement state2;
+	
+	@FindBy(xpath="//ul[@id=\"select2-socid-results\"]//li[text()=\"Akmal\"]")
+	public WebElement akmal;
+	
+	@FindBy(xpath="//span[@class=\"select2-selection select2-selection--multiple multiselect multiselectononeline widthcentpercentminusx maxwidth300\"]")
+	public WebElement category;
+	
+	@FindBy(xpath="//ul[@id=\"select2-select_categ_comande_id-results\"]//li[text()=\"Container\"]")
+	public WebElement container;
+	
+	@FindBy(xpath="//span[@class=\"select2-selection select2-selection--multiple multiselect multiselectononeline\"]")
+	public WebElement status3;
+	
+	@FindBy(xpath="//ul[@id=\"select2-object_status-results\"]//li[text()=\"Approved\"]")
+	public WebElement status4;
+	
+	//Billing
+	
+	@FindBy(xpath="(//a[@title=\"Billing | Payment\"])[2]")
+	public WebElement billing1;
+	
+	@FindBy(xpath="//a[@title=\"Customer invoices\"]")
+	public WebElement cusinvoice;
+	
+	@FindBy(xpath="//td[text()=\"Number of open invoices - Customer invoice\"]")
+	public WebElement cusheading;
+	
+	@FindBy(xpath="//td[text()=\"Number of open invoices - Vendor invoice\"]")
+	public WebElement cusheading3;
+	
+	@FindBy(xpath="//th[text()=\"Customer draft invoices\"]")
+	public WebElement cusheading1;
+	
+	@FindBy(xpath="//th[text()=\"Unpaid customer invoices \"]")
+	public WebElement cusheading2;
+	
+	@FindBy(xpath="//a[@href=\"/comm/card.php?socid=2\"]")
+	public WebElement teclib;
+	
+	@FindBy(xpath="//div[@class=\"error\"]")
+	public WebElement cuserror;
+	
+	@FindBy(xpath="(//a[@title=\"New invoice\"])[3]")
+	public WebElement newinvoice1;
+	
+	@FindBy(xpath="//span[@id=\"select2-socid-container\"]")
+	public WebElement custodrop;
+	
+	@FindBy(xpath="//ul[@id=\"select2-socid-results\"]//li[text()=\"aqua \"]")
+	public WebElement aqua;
+	
+	@FindBy(xpath="//label[text()=\"Down payment invoice\"]")
+	public WebElement down2;
+	
+	@FindBy(xpath="//span[@id=\"select2-cond_reglement_id-container\"]")
+	public WebElement payterm;
+	
+	@FindBy(xpath="//span[@id=\"select2-selectfk_account-container\"]")
+	public WebElement defaultbank;
+	
+	@FindBy(xpath="//ul[@id=\"select2-selectfk_account-results\"]//li[text()=\"Bank bs6tu\"]")
+	public WebElement default1;
 }
 

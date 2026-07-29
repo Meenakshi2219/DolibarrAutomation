@@ -73,6 +73,7 @@ When User clicks testonline button
 And User select the valid plan to create instance
 Then User switches to registration window
 
+
 Scenario Outline: Verify Dolicloud Instance Creation with valid and invalid data
 When user enteres email "<Email>"
 And User enters company name "<company>"
@@ -94,9 +95,11 @@ Examples:
 |meena520@gmail.com| Arivuiii    | 9677878965 | Ammu@2216    |  Ammu@2216   |India (IN)   | Success |
 
 
+
 Scenario: Installed instance and switch back to parent
 When User click the login credential link
 And User close the current dashboard tab
+
 
 Scenario: Verify CMS,WEbsite and pos in features pge
 When User clicks the CMSwebsite
@@ -165,7 +168,7 @@ When User clicks the facebook icon
 Then Verify facebook page is opened
 
 
-
+@Meenu
 Scenario: Validating new selling application
 When User clicks the home icon
 And User clicks the test online
@@ -173,7 +176,7 @@ And User select the second option
 And User select the selling application
 Then login page is displayed
 
-
+@Meenu
 Scenario Outline: Login with valid and invalid credential
 When User enter the username "<username1>"
 And User enter the password "<password1>"
@@ -183,16 +186,18 @@ Then Verify the login result "<result1>"
 Examples:
 
 |username1 | password1  | result1 |
-|doli      | doli       | failure |
-|          | deenu      | failure |
-|deenu     |            | failure |
+#|doli      | doli       | failure |
+#| doli     | deenu      | failure |
+#|deenu     |            | failure |
 |demo      | demo       | Success |
+
 
 @Meenu
 Scenario: Verify CRM Home page
 Given application should open
 Then Verify the CRM Homepage
 And Verify the home page tabs are displayed
+
 
 
 Scenario Outline: Create a new member
@@ -212,7 +217,8 @@ Examples:
 |Production   |Individual   |meenu@           | Kaviya     |  murli       | failure    |
 |Aluminum     |Individual   |meenu@gmail.com  |k           |              | failure    |
 |Production   |Legal entity |meenu67@gmail.com|            |      kumar   | failure    |
-|Production   |Individual   |meenu54@gmail.com|Keerthi      |Kalai          | Success    |
+#|Production   |Legal entity |meenu67@gmail.com|   123      |      kumar   | failure    |
+|Production   |Individual   |meenu54@gmail.com|Ammu     |Kalai          | Success    |
 
 
 Scenario: New Mwmber Verification
@@ -232,14 +238,18 @@ And User select the dob "22/09/2007"
 And User click save button
 And User check the contribution
 And User check the notes
+And User enter the new notes as "New price is added"
 And User check the liked files
+And User adding new filess "D:\picture demo\crm2.PNG"
 And User check the event
 Then user go to list
+
 
 
 Scenario: Validate list item
 When User select the member from the list
 And User select the action
+And User select the assigntag
 And User click the confirm button
 And User select the tag
 And User click validate

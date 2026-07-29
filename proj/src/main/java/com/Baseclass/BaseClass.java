@@ -1,5 +1,6 @@
 package com.Baseclass;
 
+import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.io.FileUtils;
 
@@ -41,9 +43,12 @@ public class BaseClass {
 	{
 		ChromeOptions options=new ChromeOptions();
 		Map<String,Object> pref=new HashMap<>();
-		pref.put("Creadentials_enable_servic",false);
+		pref.put("Credentials_enable_service",false);
 		pref.put("profile.password_manager_enabled",false);
+		pref.put("profile.password_manager_leak_detection",false);
 		options.setExperimentalOption("prefs",pref);
+		options.addArguments("--disable-save-password-bubble");
+		options.addArguments("--disable-features=passwordLeakDetection");
 		 driver = new ChromeDriver(options);
 		  wait=new WebDriverWait(driver,Duration.ofSeconds(30));
 		   
@@ -129,8 +134,13 @@ public class BaseClass {
 			return element.isSelected();
 		}
 //		Is Element Present
-		public boolean isElementPresent(By elements) {
-			return driver.findElements(elements).size()>0;
+		public boolean isElementPresent(WebElement element) {
+			try {
+				return element.isDisplayed();
+			}catch(NoSuchElementException e) {
+				return false;
+			}
+			
 		}
 
 //Dropdown
@@ -152,6 +162,13 @@ public class BaseClass {
 		wait.until(ExpectedConditions.elementToBeClickable(dropdown));
 		Select select=new Select(dropdown);
 		select.selectByIndex(index);
+	}
+	
+	public void selectCustomdd(WebElement dropdown,WebElement option) {
+		wait.until(ExpectedConditions.elementToBeClickable(dropdown));
+		dropdown.click();
+		wait.until(ExpectedConditions.elementToBeClickable(option));
+		option.click();
 	}
 	
 	//close tab
@@ -299,6 +316,12 @@ public void switchtoParent() {
 	
 	driver.switchTo().window(parentWindow);
 }
+public void switchparent() {
+for(String window:driver.getWindowHandles()) {
+	driver.switchTo().window(window);
+	break;
+}
+}
 //Upload
 //	Works when <input type="file"> is present.
 	public void uploadFile(WebElement upload, String filepath) {
@@ -326,6 +349,19 @@ public void switchtoParent() {
 	    robot.delay(500);
 	    robot.keyPress(KeyEvent.VK_ENTER);
 	    robot.keyRelease(KeyEvent.VK_ENTER);
+	}
+	
+	//Close dialog box
+	
+	public void closedialog() throws AWTException {
+		try {
+		 Robot robot = new Robot();
+		    robot.delay(3000);
+		    robot.keyPress(KeyEvent.VK_ESCAPE);
+		    robot.keyRelease(KeyEvent.VK_ESCAPE);
+	}catch(Exception e) {
+		e.printStackTrace();;
+	}
 	}
 
 //Get Url
@@ -355,23 +391,12 @@ public void switchtoParent() {
 		return element.getText();
 	}
 	
-	//Scrolldown
 	
-	public void scrolldown (WebElement element) throws InterruptedException {
-		JavascriptExecutor js=(JavascriptExecutor)driver;
-		for(int i=0;i<15;i++) {
-			js.executeScript("window.scrollBy(0, 100)");
-			Thread.sleep(250);
-		}
+	//pageload
+	
+	public void waitforpageload() {
+		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState=='complete';"));
 		
-	}
-	
-	
-	// Wait for page load
-	
-	public void waitforPageLoad() {
-		wait=new WebDriverWait(driver,Duration.ofSeconds(20));
-		wait.until(ExpectedConditions.jsReturnsValue("return document.readystate=='complete'"));
 	}
 //wait for url to load
 	public void waitForURL(String text) {
@@ -408,10 +433,19 @@ public void switchtoParent() {
 		}
 	}
 	
+	
+	public void waitForClikable(WebElement element) {
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+	}
+	
 	// Element Verify
 	public boolean verifyElement(WebElement element) {
 		 return element.isDisplayed()&& element.isEnabled();
 	 }
+	
+	public boolean validateElement(WebElement element) {
+		return element.isEnabled()&&element.isSelected();
+	}
 }
 	
 

@@ -26,7 +26,7 @@ public class Steps extends BaseClass {
 		
 		String actualUrl=getUrl();
 		if(actualUrl.contains("dolibarr")) {
-			Assert.assertTrue(true);
+			
 			System.out.println("Application is lauched correctly");
 		}else {
 			Assert.fail("Application is not lauched correctly");
@@ -358,11 +358,9 @@ public class Steps extends BaseClass {
 	@When ("User close the current dashboard tab")
 	public void user_close_the_current_dashboard_tab() {
 		close();
-		for(String window:driver.getWindowHandles()) {
-			driver.switchTo().window(window);
-			break;
+		switchparent();
 		}
-	}
+	
 	
 	
 	@When("User clicks the CMSwebsite")
@@ -612,12 +610,10 @@ public class Steps extends BaseClass {
 		switchToChildWindow();
 		Assert.assertTrue(getUrl().contains("x.com"));
 		close();
-		for(String window:driver.getWindowHandles()) {
-			driver.switchTo().window(window);
-			break;
+		switchparent();
 		}
 		
-	}
+	
 	@When ("User clicks the Reddit icon")
 	public void user_clicks_the_reddit_icon() {
 		click(details.reddit);
@@ -860,16 +856,40 @@ public class Steps extends BaseClass {
 	public void user_check_the_notes() {
 		click(details.note);
 		Assert.assertTrue(getUrl().contains("note.php"));
+		
 	}
+	
+	@And ("User enter the new notes as {string}")
+	public void user_enter_the_new_notes_as(String notes1 ) {
+		click(details.publicedit);
+		click(details.text2);
+		sendKeys(details.text2,notes1);
+		click(details.notesave);
+		Assert.assertTrue("Note is not updated",isDisplayed(details.notelist));
+		
+	}
+
 	
 	@And ("User check the liked files")
 	public void user_check_the_linked_files() {
 		click(details.file);
 		Assert.assertTrue(getUrl().contains("document.php"));
 	}
+	
+	@And ("User adding new filess {string}")
+	public void user_adding_new_filess(String file) throws Exception {
+		click(details.plusbtn);
+		uploadFile(details.uploadarea,file);
+		closedialog();
+		click(details.upload);
+		Assert.assertTrue("File is not uploaded",isDisplayed(details.uploadverify));
+	}
 	@And ("User check the event")
 	public void user_check_the_event() {
-		click(details.event);
+		waitforpageload();
+		scrollToElement(details.event);
+		waitForClikable(details.event);
+		jsClick(details.event);
 		Assert.assertTrue(getUrl().contains("agenda.php"));
 		
 	}
@@ -882,11 +902,21 @@ public class Steps extends BaseClass {
 	@When ("User select the member from the list")
 	public void user_select_the_mmber_form_the_list() {
 		click(details.checkbox);
+		Assert.assertTrue("Member is not selcted",isSelected(details.checkbox));
 		}
 	@And ("User select the action")
 	public void user_select_the_action() {
+		waitforpageload();
+		scrollToElement(details.vali);
+		waitForClikable(details.vali);
 		click(details.vali);
+	}
+	@And ("User select the assigntag")
+	public void user_select_the_assigntag() {
+		waitforpageload();
+		scrollToElement(details.tag);
 		click(details.tag);
+
 	}
 	@And ("User click the confirm button")
 	public void user_click_the_confirm_button() {
@@ -920,7 +950,12 @@ public class Steps extends BaseClass {
 	
 	@And ("User choose the action from dropdown")
 	public void user_choose_the_action_from_dropdown() {
+		waitforpageload();
+		scrollToElement(details.vali);
 		click(details.vali);
+		
+		waitforpageload();
+		scrollToElement(details.vali);
 		click(details.term);
 	}
 	
@@ -946,7 +981,11 @@ public class Steps extends BaseClass {
 	
 	@And ("User select the subscription")
 	public void user_select_the_subscription() {
+		waitforpageload();
+		scrollToElement(details.vali);
 		click(details.vali);
+		waitforpageload();
+		scrollToElement(details.subs);
 		click(details.subs);
 	}
 	
@@ -1047,7 +1086,7 @@ public class Steps extends BaseClass {
 	
 	@Then ("Verify the uptodate member is deleted")
 	public void verify_the_uptodate_member_is_deleted() {
-		Assert.assertTrue("member is  deleted upto date",isDisplayed(details.upmem));
+		Assert.assertFalse("member is  deleted upto date",isDisplayed(details.upmem));
 	}
 	
 	@Given ("User is on outofdate page")
@@ -1104,7 +1143,7 @@ public class Steps extends BaseClass {
 	}
 	@Then ("Verify the termination member is deleted")
 	public void verify_the_termination_member_is_deleted() {
-		Assert.assertTrue("Member is not deleted",isDisplayed(details.id5));
+		Assert.assertFalse("Member is not deleted",isDisplayed(details.id5));
 	}
 	
 	@Given ("user is on statistic page")
@@ -1512,6 +1551,766 @@ public class Steps extends BaseClass {
 	public void user_go_back_to_min_list() {
 		click(details.back2);
 	}
+	
+	@Given ("User is on commerce area page")
+	public void user_is_on_commerce_area_page() {
+		click(details.commerce);
+		Assert.assertTrue(getUrl().contains("commercial"));;
+	}
+	@And ("Verifying page headings")
+	public void verifying_page_heading() {
+		Assert.assertTrue("Draft Vendor is not display",isDisplayed(details.comheading1));
+		Assert.assertTrue("Draft Purchase is not display",isDisplayed(details.comheading2));
+	}
+	@When ("User clicks on vendor proposal")
+	public void user_clicks_on_vendor_proposal() {
+		click(details.venpropose);
+		Assert.assertTrue(getUrl().contains("supplier_proposal"));
+	}
+	@And ("Verifying proposal page")
+	public void verifying_proposal_page() {
+		Assert.assertTrue("Statistics is not display",isDisplayed(details.venheading1));
+		Assert.assertTrue("Draft Request is not display",isDisplayed(details.venheading2));
+		Assert.assertTrue("Openprice is not display",isDisplayed(details.venheading3));
+		
+	}
+	@And ("User clicks any proposal")
+	public void user_clicks_any_proposal() {
+		click(details.aaa);
+		Assert.assertTrue(getUrl().contains("socid"));
+	}
+	@Then ("warning message should display")
+	public void warning_message_should_display() {
+		String actual=getText(details.erroraa);
+		Assert.assertNotNull(actual);
+		Assert.assertFalse(actual.trim().isEmpty());
+	}
+	
+	@When ("User click the new price request")
+	public void user_click_the_new_price_request() {
+		click(details.newreq);
+		Assert.assertTrue(getUrl().contains("card.php"));
+	}
+	@Then ("New price creating page is open")
+	public void new_price_creating_page_is_open() {
+		Assert.assertTrue("New Price Creating page is not open",isDisplayed(details.newheading));
+	}
+	@Then("User select the vendor {string}")
+	public void user_select_the_vendor(String Vendor) {
+ 
+		if(!Vendor.trim().isEmpty()) {
+			click(details.vendrop);
+		}if(Vendor.equalsIgnoreCase("aaa")) {
+			click(details.venop);
+		}
+	}
+			
+			
+	@And ("User select the payment term {string}")
+	public void user_select_the_payment_term(String Term) {
+		click(details.terms);
+		if(Term.equalsIgnoreCase("30 days")) {
+			click(details.days);
+		}else
+			if(Term.equalsIgnoreCase("Order")) {
+				click(details.order2);
+			}
+	}
+	@And ("User select the payment method {string}")
+	public void user_select_the_payment_method(String Method) {
+		click(details.method);
+		if(Method.equalsIgnoreCase("Cash")) {
+			click(details.cash);
+		}else
+			if(Method.equalsIgnoreCase("Check")){
+				click(details.check2);
+			}
+	}
+	@And  ("User select the delivery date")
+	public void user_select_the_delivery_date() {
+		click(details.now);
+	}
+	@And ("User select the tags")
+	public void user_select_the_tags() {
+		click(details.tags);
+		click(details.advance);
+	}
+	@And ("User clicks the create draft button")
+	public void user_clicks_the_create_draft_button() {
+		click(details.creatdraft);
+	}
+	@Then ("New price will be created {string}")
+	public void new_price_will_be_created(String Result) {
+		 if(Result.equalsIgnoreCase("Success")) {
+		    	Assert.assertTrue(getUrl().contains("card.php?id"));
+		
+	}else {
+		Assert.assertTrue("Error meessage is not displayed",isDisplayed(details.venerror));
+	}
+	
+	}
+	
+	
+	@Given ("User is on price request page")
+	public void user_is_on_price_request_page() {
+		Assert.assertTrue(getUrl().contains("card.php?id"));
+	}
+	@When ("User select the type as {string}")
+	public void user_select_the_type(String product) {
+		selectDropdownByVisibleText(details.typeven,product)	;
+	}
+	
+	@And ("User enter the descriptionn as {string}")
+	public void user_enter_the_description_as(String desc3) {
+		switchToFrame(details.descframe);
+		click(details.descframe2);
+		sendKeys(details.descframe2,desc3);
+		switchback();
+	}
+	@And ("User enter the unit as {string}")
+	public void user_enter_the_unit_as(String int5) {
+		sendKeys(details.price3,int5);
+	}
+	@And ("User select quantity as {string}")
+	public void user_select_quantity_as(String int6) {
+		sendKeys(details.quantity,int6);
+	}
+	@And ("User select the discount as {string}")
+	public void user_select_the_discount_as(String int7) {
+		sendKeys(details.discount,int7);
+	}
+	@And ("User click add button")
+	public void user_click_add_button() {
+		click(details.add);
+	}
+	@And ("User click the validate buttonn")
+	public void user_click_the_validate_buttonn() {
+		click(details.validate2);
+		click(details.yes2);
+	}
+	@Then ("the price is validated")
+	public void the_price_is_validated() {
+		Assert.assertTrue(getUrl().contains("confirm_validate"));
+	}
+	
+	
+	@Given ("User is on contact page")
+	public void user_is_on_contact_page() {
+		click(details.contact);
+		Assert.assertTrue(getUrl().contains("contact.php"));
+	}
+	@And ("User click the add button")
+	public void user_click_the_add_button() {
+		click(details.add2);
+		
+	}
+	@And ("User click the notess")
+	public void user_click_the_notess() {
+		click(details.note2);
+		Assert.assertTrue(getUrl().contains("note.php"));
+		Assert.assertTrue("Note is not updated",isDisplayed(details.notelist));
+	}
+	@And ("User enter the new note as {string}")
+	public void user_enter_the_new_note_as(String notes ) {
+		click(details.publicedit);
+		click(details.text2);
+		sendKeys(details.text2,notes);
+	}
+	@And ("User save the notes")
+	public void user_save_the_notes() {
+		click(details.notesave);
+	}
+	@And ("User click the linked files")
+	public void user_click_the_linked_files() {
+		click(details.link2);
+		Assert.assertTrue(getUrl().contains("document.php"));
+	}
+	@And ("User adding new files {string}")
+	public void user_adding_new_files(String file) throws Exception {
+		click(details.plusbtn);
+		uploadFile(details.uploadarea,file);
+		closedialog();
+		Assert.assertTrue("File is not uploaded",isDisplayed(details.uploadverify));
+	}
+	@And ("Click the upload button")
+	public void click_the_upload_button() {
+		click(details.upload);
+		
+	}
+	@And ("User click the log")
+	public void user_click_the_log() {
+		click(details.log);
+		Assert.assertTrue(getUrl().contains("info.php"));
+	}
+	@Then ("User went to back to list")
+	public void user_went_to_back_to_list() {
+		click(details.backlist1);
+	}
+	
+	@Given ("User is on list in vendor")
+	public void user_is_on_list_in_vendor() {
+		click(details.venlist);
+		Assert.assertTrue(getUrl().contains("list.php"));
+	}
+	@When ("User select the one vendor")
+	public void user_select_the_one_vendor() {
+		click(details.listid1);
+	}
+	@And ("User select an action")
+	public void user_select_an_action() {
+		click(details.vali);
+		click(details.listdelete);
+	}
+	@And ("User click the confirmm button")
+	public void user_click_the_confirmm_button() {
+		click(details.confirma);
+	}
+	@And ("User select yes in dropdd")
+	public void user_select_yes_in_dropdd() {
+		selectDropdownByVisibleText(details.drop6,"Yes");
+	}
+	@And ("User click the validate btn")
+	public void user_click_the_validate_btn() {
+		click(details.vlid);
+	}
+	@Then ("Warning message is displayed")
+	public void warning_message_is_displayed() {
+		String actual=getText(details.errorlist);
+		Assert.assertFalse(actual.trim().isEmpty());
+	}
+	
+	@Given ("User is on statistics page in vendor")
+	public void user_is_on_statistics_page_in_vendor() {
+		click(details.statistic);
+		Assert.assertTrue(getUrl().contains("stats"));
+	}
+	
+
+	@Given("User select the thirdparty {string}")
+	public void user_select_the_thirdparty(String Thirdparty) {
+	
+		click(details.thirdparty);
+		if(Thirdparty.equalsIgnoreCase("Adem Demir")) {
+		click(details.thirdparty1);
+	}
+	}
+	
+	@And ("User select the thirdparty type {string}")
+	public void user_select_the_thirdparty_type(String type) {
+		click(details.thirdtype);
+		if(type.equalsIgnoreCase("Other")) {
+		click(details.thirdtype2);
+	}
+	}
+	@And ("User select the vendor tag {string}")
+	public void user_select_the_vendor_tag(String tag) {
+		click(details.tag1);
+		if(tag.equalsIgnoreCase("Albunes")) {
+		click(details.tag2);
+	}
+	}
+	@And ("User select the vendor proposal {string}")
+	public void user_select_the_vendor_proposal(String proposal) {
+		click(details.venpro);
+		if(proposal.equalsIgnoreCase("Advance")) {
+		click(details.venpo2);
+	}
+	}
+	@And ("User select the status {string}")
+	public void user_select_the_status(String status) {
+		click(details.sta1);
+		if(status.equalsIgnoreCase("Accepted")) {
+		click(details.sta2);
+	}
+	}
+	@Then ("the click the refresh button")
+	public void user_clilck_the_refresh_button() {
+		click(details.refresh);
+	}
+	
+	@Given ("User is on purchase orderr page")
+	public void user_is_on_purchase_orderr_page() {
+		click(details.purchaseorder);
+		Assert.assertTrue(getUrl().contains("commande"));
+	}
+	@And ("User validate the page heading")
+	public void user_validate_the_page_heading() {
+		Assert.assertTrue("Purchase order statistics is not displayed",isDisplayed(details.purchasestate));
+		Assert.assertTrue("Draft order  is not displayed",isDisplayed(details.neworderpurchase));
+	}
+	
+	@When ("User click the new order request")
+	public void user_click_the_new_order_request() {
+		click(details.newpurchase);
+	}
+	@Then ("New order creating page is open")
+	public void new_order_creating_page_is_open() {
+		Assert.assertTrue(getUrl().contains("commande"));
+		Assert.assertTrue("New purchase heading is not displayed",isDisplayed(details.purchaseheading));
+	}
+	@And ("User select the vendorr {string}")
+	public void user_select_the_vendorr (String vendor) {
+		if(!vendor.trim().isEmpty()) {
+			click(details.vendrop);
+		}if(vendor.equalsIgnoreCase("agri")) {
+			click(details.agri);
+		}
+	}
+
+	
+	@And ("User select the payment termm {string}")
+	public void user_select_the_payment_termm (String term) {
+		click(details.terms);
+		if(term.equalsIgnoreCase("30 days")) {
+			click(details.days);
+		}else
+			if(term.equalsIgnoreCase("Order")) {
+				click(details.order2);
+			}
+
+	}
+	@And ("User select the payment methodd {string}")
+	public void user_select_the_payment_methodd (String method) {
+		click(details.method);
+		if(method.equalsIgnoreCase("Cash")) {
+			click(details.cash);
+		}else
+			if(method.equalsIgnoreCase("Check")){
+				click(details.check2);
+			}
+
+	}
+	@And ("User select the delivery datee")
+	public void user_select_the_delivery_datee() {
+		click(details.now);
+	}
+	@And ("User select the tags {string}")
+	public void user_select_the_tags(String tags) {
+		
+		click(details.tags);
+		if(tags.equalsIgnoreCase("BSK")) {
+			click(details.bsk);
+		}else
+			if(tags.equalsIgnoreCase("Penne")){
+				click(details.pen);
+			}
+	}
+	@And ("User enter the public notes {string}")
+	public void user_enter_the_public_notes(String note1) {
+		sendKeys(details.pubnote,note1);
+	}
+	@And ("User enter the private notes {string}")
+	public void user_enter_the_private_notes (String note2) {
+		sendKeys(details.prinote,note2);
+	}
+	@And ("User clicks the create draft buttonn")
+	public void user_click_the_create_draft_buttonn() {
+		click(details.creatdraft);
+	}
+	@Then ("New price will be createdd {string}")
+	public void new_price_will_be_createdd (String result4) {
+		 if(result4.equalsIgnoreCase("Success")) {
+		    	Assert.assertTrue(getUrl().contains("card.php?id"));
+		
+	}else {
+		Assert.assertTrue("Error meessage is not displayed",isDisplayed(details.venerror));
+	}
+	
+
+	}
+	
+	@Given ("User is on purchase order page")
+	public void user_is_on_purchase_order_page() {
+		
+		Assert.assertTrue(getUrl().contains("card.php"));
+	}
+	@When ("User select the typee as {string}")
+	public void user_select_the_typee_as(String prd) {
+		selectDropdownByVisibleText(details.typeven,prd);
+	}
+	@And ("User enterr the description as {string}")
+	public void user_enterr_the_description_as(String desc) {
+		switchToFrame(details.descframe);
+		click(details.descframe2);
+		sendKeys(details.descframe2,desc);
+		switchback();
+
+	}
+	@And ("User enter the unitt as {string}")
+	public void user_enter_the_unitt_as(String unit2) {
+		sendKeys(details.price3,unit2);
+	}
+	@And ("User select quantityy as {string}")
+	public void user_select_quantityy_as(String qty) {
+		sendKeys(details.quantity,qty);
+	}
+	
+	@And ("User select the discountt as {string}")
+	public void user_select_the_discountt_as(String dis) {
+		sendKeys(details.discount,dis);
+	}
+	@And ("User click add buttonn")
+	public void user_click_add_buttonn() {
+		click(details.add);
+	}
+	@And ("User click the validatee button")
+	public void user_click_the_validatee_button() {
+		click(details.approve);
+		click(details.yes2);
+
+	}
+	@Then ("the purchase is validated")
+	public void the_purchase_is_validated() {
+		Assert.assertTrue(getUrl().contains("card.php?id"));
+	}
+	
+	@Given ("User is on contactt page")
+	public void user_is_on_contactt_page() {
+		click(details.contact);
+		Assert.assertTrue(getUrl().contains("contact.php"));
+	}
+	@And ("User click the addd button")
+	public void user_click_the_addd_button() {
+		click(details.add2);
+		
+	}
+	@And ("User click thee notes")
+	public void user_click_thee_notes() {
+		click(details.note3);
+		Assert.assertTrue(getUrl().contains("note.php"));
+		Assert.assertTrue("Note is not updated",isDisplayed(details.newnote));
+	}
+	
+	@And ("User click the linkedd files")
+	public void user_click_the_linkedd_files() {
+		click(details.link2);
+		Assert.assertTrue(getUrl().contains("document.php"));
+	}
+	@And ("User addingg new files {string}")
+	public void user_addingg_new_files(String file) throws Exception {
+		click(details.plusbtn);
+		uploadFile(details.uploadarea,file);
+		closedialog();
+		
+	}
+	@And ("Click the uploadd button")
+	public void click_the_uploadd_button() {
+		click(details.upload);
+		Assert.assertTrue("File is not uploaded",isDisplayed(details.upcheck));
+	}
+	@And ("User click the event")
+	public void user_click_the_event() {
+		waitforpageload();
+		scrollToElement(details.agent);
+		
+		click(details.agent);
+		Assert.assertTrue(getUrl().contains("info.php"));
+	}
+	@Then("User went back to list")
+	public void user_went_back_to_list() {
+
+		click(details.backlist1);
+	}
+	
+	@Given("User is on list in purhase")
+	public void user_is_on_list_in_purhase() {
+	    Assert.assertTrue(getUrl().contains("list.php"));
+	}
+	@When("User select the one purchase")
+	public void user_select_the_one_purchase() {
+	    click(details.purchaseid);
+	    Assert.assertTrue(validateElement(details.purchaseid));
+	}
+	@When("User select an action in purchase")
+	public void user_select_an_action_in_purchase() {
+		waitforpageload();
+		scrollToElement(details.event);
+		click(details.vali);
+		click(details.deletepurchase);
+
+	}
+	@When("User clickk the confirm button")
+	public void user_clickk_the_confirm_button() {
+		click(details.confirma);
+	}
+	@When("User select yes in dropd")
+	public void user_select_yes_in_dropd() {
+		selectDropdownByVisibleText(details.drop6,"Yes");
+	    }
+	
+	@When("User click the validatee btn")
+	public void user_click_the_validatee_btn() {
+		click(details.vlid);
+	    
+	}
+	@Then("The record is deleted successfully")
+	public void the_record_is_deleted_successfully() {
+		Assert.assertTrue("The item is not deleted",isDisplayed(details.purchaseid));
+	}
+
+	@Given("User is on draft in purhase")
+	public void user_is_on_draft_in_purhase() {
+		click(details.draftlink);
+		Assert.assertTrue(getUrl().contains("orders_suppliers"));
+	}
+	@When("User select the one draft item")
+	public void user_select_the_one_draft_item() {
+		click(details.draftid);
+		Assert.assertTrue(validateElement(details.draftid));
+	}
+	@When("User select an action in draft")
+	public void user_select_an_action_in_draft() {
+		waitforpageload();
+		scrollToElement(details.vali);
+		click(details.vali);
+		click(details.validatepurchase);
+
+	}
+	@When("User clickk the confirm button in draft")
+	public void user_clickk_the_confirm_button_in_draft() {
+		click(details.confirma); 
+	}
+	@When("User select yess")
+	public void user_select_yess() {
+		selectDropdownByVisibleText(details.drop6,"Yes");
+	}
+	@When("User click the validte btn")
+	public void user_click_the_validte_btn() {
+		click(details.vlid);
+	}
+	@Then("The record is validated successfully")
+	public void the_record_is_validated_successfully() {
+		System.out.println("Record got validated");
+	}
+	
+	@And ("User is on validate page")
+	public void user_is_on_validate_page() {
+		click(details.validatepage);
+		Assert.assertTrue(getUrl().contains("orders_suppliers"));
+	}
+	@Then("User see the validate data")
+	public void user_see_the_validate_data() {
+ 
+		Assert.assertTrue("No data found",isDisplayed(details.norec));
+		
+	}
+
+	@Given("User is on approved in purchase")
+	public void user_is_on_approved_in_purchase() {
+	    click(details.approved);
+			Assert.assertTrue(getUrl().contains("orders_suppliers"));
+
+	}
+	@When("User select the one approved")
+	public void user_select_the_one_approved() {
+		waitforpageload();
+		scrollToElement(details.approvedid);
+	click(details.approvedid);
+	Assert.assertTrue(validateElement(details.approvedid));
+
+	}
+	@When("User select an action in approved")
+	public void user_select_an_action_in_approved() {
+	waitforpageload();
+			scrollToElement(details.vali);
+			click(details.vali);
+			click(details.deletepurchase);
+
+	}
+	@When("User click the confirm button in approved")
+	public void user_click_the_confirm_button_in_approved() {
+	    click(details.confirma);
+	}
+	@When("User select yes in dropd in approved")
+	public void user_select_yes_in_dropd_in_approved() {
+	selectDropdownByVisibleText(details.drop6,"Yes");
+	}
+	@When("User click the validate btn in approved")
+	public void user_click_the_validate_btn_in_approved() {
+	click(details.vlid);
+	}
+	@Then("The record is deleted successfullly")
+	public void the_record_is_deleted_successfullly() {
+	    Assert.assertTrue("The item is not deleted",isDisplayed(details.approvedid));
+	}
+
+	@Given("User is on order in purchase")
+	public void user_is_on_order_in_purchase() {
+	  click(details.ordered);
+			Assert.assertTrue(getUrl().contains("orders_suppliers"));
+	  
+	}
+	@When("User select the one order item")
+	public void user_select_the_one_order_item() {
+	click(details.orderid);
+			Assert.assertTrue(validateElement(details.orderid));
+
+	}
+	@When("User select an action in order")
+	public void user_select_an_action_in_order() {
+	    waitforpageload();
+			scrollToElement(details.vali);
+			click(details.vali);
+			click(details.validatepurchase);
+
+	}
+	@When("User clickk the confirm button in order")
+	public void user_clickk_the_confirm_button_in_order() {
+	click(details.confirma);
+	}
+	@When("User select yes in order")
+	public void user_select_yes_in_order() {
+	selectDropdownByVisibleText(details.drop6,"Yes");
+	}
+	@When("User click the validate btn in order")
+	public void user_click_the_validate_btn_in_order() {
+	    click(details.vlid);
+	}
+	@Then("The record is validated successfullly")
+	public void the_record_is_validated_successfullly() {
+	System.out.println("Record got validated");
+	}
+
+	@Given("User is on order in cancelled")
+	public void user_is_on_order_in_cancelled() {
+	   click(details.canceled);
+	Assert.assertTrue(getUrl().contains("list.php"));
+	 
+	}
+	@When("User select the one cancel item")
+	public void user_select_the_one_cancel_item() {
+	    click(details.cancelid);
+	Assert.assertTrue(validateElement(details.cancelid));
+
+	}
+	@When("User select an action in cancel")
+	public void user_select_an_action_in_cancel() {
+	       waitforpageload();
+				scrollToElement(details.vali);
+				click(details.vali);
+				click(details.deletepurchase);
+
+	}
+	@When("User clickk the confirm button in cancel")
+	public void user_clickk_the_confirm_button_in_cancel() {
+	click(details.confirma);
+	}
+	@When("User select yes in cancel")
+	public void user_select_yes_in_cancel() {
+	    selectDropdownByVisibleText(details.drop6,"Yes");
+	}
+	@When("User click the validate btn in cancel")
+	public void user_click_the_validate_btn_in_cancel() {
+	  click(details.vlid);  
+	}
+	@Then("The record is deleted")
+	public void the_record_is_deleted() {
+	    System.out.println("The record is deleted successfully");
+	}
+	@Then("User is on Refused page")
+	public void user_is_on_refused_page() {
+	    click(details.refused);
+			Assert.assertTrue(getUrl().contains("orders_suppliers"));
+
+	}
+	@Then("User see the refused data")
+	public void user_see_the_refused_data() {
+	Assert.assertTrue("No data found",isDisplayed(details.norec));
+	}
+
+	@Given("User is on statistics page in purchase")
+	public void user_is_on_statistics_page_in_purchase() {
+	    click(details.state2);
+	Assert.assertTrue(getUrl().contains("stats"));
+
+	}
+	@Given("User select the thirdpartyy {string}")
+	public void user_select_the_thirdpartyy(String  third)  {
+	   if(third.equals("Akmal")) {
+		   selectCustomdd(details.thirdparty,details.akmal);
+	   }
+	   
+	String expected=third;
+	String actual=getText(details.thirdparty);
+	Assert.assertEquals(expected,actual);
+
+	}
+	@Given("User select the thirdpartyy type {string}")
+	public void user_select_the_thirdpartyy_type(String  type) {
+		 if(type.equals("Other")) {
+			   selectCustomdd(details.thirdtype,details.thirdtype2);
+		   }
+		   
+		String expected=type;
+		String actual=getText(details.thirdtype);
+		Assert.assertEquals(expected,actual);
+
+	}
+	@Given("User select the vendor tagg {string}")
+	public void user_select_the_vendor_tagg(String  tag){
+		 if(tag.equals("Albunes")) {
+			   selectCustomdd(details.tag1,details.tag2);
+		   }
+		   
+		String expected=tag;
+		String actual=getText(details.tag1);
+		Assert.assertEquals(expected,actual);
+
+	    
+	}
+	@Given("User select the category {string}")
+	public void user_select_the_category(String  category) {
+		 if(category.equals("xContainer")) {
+			   selectCustomdd(details.category,details.container);
+			   }
+	}
+	
+	@Then("the click the refresh buttonn")
+	public void the_click_the_refresh_buttonn() {
+		click(details.refresh);  
+	}
+
+	@Given("User is on billing area page")
+	public void user_is_on_billing_area_page() {
+	    click(details.billing1);
+	Assert.assertTrue(getUrl().contains("billing"));;
+
+	}
+	@Given("Verifying invoice page headings")
+	public void verifying_invoice_page_headings() {
+	Assert.assertTrue("Customer invoice is not display",isDisplayed(details.cusheading));
+	Assert.assertTrue("Vendor invoice is not display",isDisplayed(details.cusheading3));
+
+	}
+	@When("User clicks on customer invoice")
+	public void user_clicks_on_customer_invoice() {
+	click(details.cusinvoice);
+	Assert.assertTrue(getUrl().contains("customers_bills"));
+
+	}
+	@When("Verifying customer invoice page")
+	public void verifying_customer_invoice_page() {
+	  Assert.assertTrue("Open invoice is not display",isDisplayed(details.cusheading1));
+	Assert.assertTrue("Unpaid customer is not display",isDisplayed(details.cusheading2));
+			
+
+	}
+	@When("User clicks any draft invoice")
+	public void user_clicks_any_draft_invoice() {
+	    click(details.teclib);
+	Assert.assertTrue(getUrl().contains("socid"));
+
+	}
+	@Then("warning message should displayy")
+	public void warning_message_should_displayy() {
+	String actual=getText(details.cuserror);
+	Assert.assertNotNull(actual);
+	Assert.assertFalse(actual.trim().isEmpty());
+	back();
+
+	}
+
+	
 }
 
 
