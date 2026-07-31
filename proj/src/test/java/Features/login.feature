@@ -68,6 +68,7 @@ When User clicks membership module
 Then Verify membership relate module is displayed
 
 
+Rule: Remaining scenario
 Scenario: Verify create membership
 When User clicks testonline button
 And User select the valid plan to create instance
@@ -169,6 +170,7 @@ Then Verify facebook page is opened
 
 
 @Meenu
+
 Scenario: Validating new selling application
 When User clicks the home icon
 And User clicks the test online

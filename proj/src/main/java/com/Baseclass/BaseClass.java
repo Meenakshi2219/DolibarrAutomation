@@ -446,6 +446,18 @@ for(String window:driver.getWindowHandles()) {
 	public boolean validateElement(WebElement element) {
 		return element.isEnabled()&&element.isSelected();
 	}
+	
+	//toast message
+	
+	public String getToastMessage(WebElement element) {
+		wait.until(ExpectedConditions.visibilityOf(element));
+		return element.getText().trim();
+	}
+	
+	//count
+	public int getElementCount(List<WebElement> elements) {
+		return elements.size();
+	}
 }
 	
 

@@ -2,6 +2,8 @@ package com.Stepdefenition;
 
 
 
+import java.awt.AWTException;
+
 import org.junit.Assert;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -966,7 +968,7 @@ public class Steps extends BaseClass {
 		
 	@Then ("Verify action is performed")
 	public void verify_action_is_performed() {
-		Assert.assertFalse(driver.getPageSource().contains("kavi"));
+		Assert.assertFalse(driver.getPageSource().contains("Aruvi"));
 }
 	
 	@Given ("User is on valid member page")
@@ -1086,7 +1088,8 @@ public class Steps extends BaseClass {
 	
 	@Then ("Verify the uptodate member is deleted")
 	public void verify_the_uptodate_member_is_deleted() {
-		Assert.assertFalse("member is  deleted upto date",isDisplayed(details.upmem));
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("Record deleted"));
 	}
 	
 	@Given ("User is on outofdate page")
@@ -1143,7 +1146,8 @@ public class Steps extends BaseClass {
 	}
 	@Then ("Verify the termination member is deleted")
 	public void verify_the_termination_member_is_deleted() {
-		Assert.assertFalse("Member is not deleted",isDisplayed(details.id5));
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("Record deleted"));
 	}
 	
 	@Given ("user is on statistic page")
@@ -1264,11 +1268,8 @@ public class Steps extends BaseClass {
 	}
 	@Then ("The user is deleted successfully")
 	public void the_user_is_deleted_successfully() {
-		try {
-			Assert.assertFalse(details.listid.isDisplayed());
-		}catch(StaleElementReferenceException e) {
-			Assert.assertTrue(true);
-		}
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("Record deleted"));
 	}
 	
 	@Given ("user is on statistic page in contribution")
@@ -2045,7 +2046,8 @@ public class Steps extends BaseClass {
 	}
 	@Then("The record is deleted successfully")
 	public void the_record_is_deleted_successfully() {
-		Assert.assertTrue("The item is not deleted",isDisplayed(details.purchaseid));
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("Record deleted"));
 	}
 
 	@Given("User is on draft in purhase")
@@ -2131,7 +2133,8 @@ public class Steps extends BaseClass {
 	}
 	@Then("The record is deleted successfullly")
 	public void the_record_is_deleted_successfullly() {
-	    Assert.assertTrue("The item is not deleted",isDisplayed(details.approvedid));
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("Record deleted"));
 	}
 
 	@Given("User is on order in purchase")
@@ -2205,7 +2208,8 @@ public class Steps extends BaseClass {
 	}
 	@Then("The record is deleted")
 	public void the_record_is_deleted() {
-	    System.out.println("The record is deleted successfully");
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("record deleted"));
 	}
 	@Then("User is on Refused page")
 	public void user_is_on_refused_page() {
@@ -2309,9 +2313,1490 @@ public class Steps extends BaseClass {
 	back();
 
 	}
+	
+
+@When("User click the new invoice request")
+public void user_click_the_new_invoice_request() {
+click(details.newinvoice1);
+}
+@Then("New invoice creating page is open")
+public void new_invoice_creating_page_is_open() {
+   Assert.assertTrue(getUrl().contains("action"));
+Assert.assertTrue("New Invoice heading is not displayed",isDisplayed(details.invheading));
+
+}
+@Then("User select the customer {string}")
+public void user_select_the_customer(String customer) {
+    		if(!customer.trim().isEmpty()) {
+			click(details.custodrop);
+		}if(customer.equalsIgnoreCase("aqua")) {
+			click(details.aqua);
+		}
+	}
+
+
+@Then("User select thee type {string}")
+public void user_select_thee_type(String type1) {
+	if(type1.equalsIgnoreCase("Down Payment"))
+    		click(details.down2);
+	}
+
+
+@Then("User select the paymentt term {string}")
+public void user_select_the_paymentt_term(String term) {
+   click(details.terms);
+		if(term.equalsIgnoreCase("30 days")) {
+			click(details.days);
+		}else
+			if(term.equalsIgnoreCase("Order")) {
+				click(details.order2);
+			}
+
+
+}
+@Then("User select the paymentt method {string}")
+public void user_select_the_paymentt_method(String method) {
+    click(details.method);
+		if(method.equalsIgnoreCase("Cash")) {
+			click(details.cash);
+		}else
+			if(method.equalsIgnoreCase("Check")){
+				click(details.check2);
+			}
+
+
+}
+@Then("User select the default bank {string}")
+public void user_select_the_default_bank(String default1) {
+    click(details.defaultbank);
+		if(default1.equalsIgnoreCase("Bank bs6tu")) {
+			click(details.default1);
+		}
+}
+@Then("User select the source {string}")
+public void user_select_the_source(String source) {
+    click(details.source);
+		if(source.equalsIgnoreCase("Internet")) {
+			click(details.source2);
+		}else
+			if(source.equalsIgnoreCase("Partner")){
+				click(details.partner);
+			}
+
+}
+@Then("User select the tag {string}")
+public void user_select_the_tag(String tag1) {
+        click(details.cate2);
+		if(tag1.equalsIgnoreCase("Leistung")) {
+			click(details.leiung);
+		}else
+			if(tag1.equalsIgnoreCase("Servicios")){
+				click(details.servicio);
+			}
+
+
+}
+@Then("User enter the public note as {string}")
+public void user_enter_the_public_note_as(String note3) {
+    sendKeys(details.pubnote,note3);
+}
+
+@Then("User enter the private note as {string}")
+public void user_enter_the_private_note_as(String note4) {
+    sendKeys(details.prinote,note4);
+}
+
+@Then("User clicks the create draft button in invoice")
+public void user_clicks_the_create_draft_button_in_invoice() {
+    click(details.creatdraft);
+}
+@Then("New invoice will be created {string}")
+public void new_invoice_will_be_created(String result5) {
+    if(result5.equalsIgnoreCase("Success")){ 
+    	Assert.assertTrue(getUrl().contains("card.php?facid"));
+		
+	}else {
+		Assert.assertTrue("Error meessage is not displayed",isDisplayed(details.inverror));
+	}
+}
+
+
+@Given("User is on price request page in invoice")
+public void user_is_on_price_request_page_in_invoice()
+ {
+	
+	Assert.assertTrue(getUrl().contains("card.php"));
+}
+@When("User select the type in invoice  {string}")
+public void user_select_the_type_in_invoice(String prdi)
+ {
+	selectDropdownByVisibleText(details.typeven,prdi);
+}
+@And ("User enter the description in invoice as {string}")
+public void user_enter_the_description_in_invoice_as(String desc1) {
+	switchToFrame(details.descframe);
+	click(details.descframe2);
+	sendKeys(details.descframe2,desc1);
+	switchback();
+
+}
+@And ("User enter the unit in invoice as {string}")
+public void user_enter_the_unit_in_invoice_as(String unit3) {
+	sendKeys(details.price3,unit3);
+}
+@And ("User select quantity in invoice as {string}")
+public void user_select_quantity_in_invoice_as(String qty1) {
+	sendKeys(details.quantity,qty1);
+}
+
+@And ("User select the discount in invoice as {string}")
+public void user_select_the_discount_in_invoice_as(String dis1) {
+	sendKeys(details.discount,dis1);
+}
+@And ("User click add button in invoice")
+public void user_click_add_button_in_invoice() {
+	click(details.add);
+}
+@And ("User click the validate button in invoice")
+public void user_click_the_validate_button_in_invoice() {
+	click(details.validd);
+	click(details.yes2);
+
+}
+@Then("the price is validated in invoice")
+public void the_price_is_validated_in_invoice() 
+ {
+	Assert.assertTrue(getUrl().contains("facid"));
+}
+
+
+@Given("User is on contact page in invoice")
+public void user_is_on_contact_page_in_invoice() {
+click(details.contact);
+Assert.assertTrue(getUrl().contains("contact.php"));
+
+}
+@Given("User click the add button in invoice")
+public void user_click_the_add_button_in_invoice() {
+    click(details.add2);
+}
+@Given("User click the notes in invoice")
+public void user_click_the_notes_in_invoice() {
+	click(details.note3);
+	Assert.assertTrue(getUrl().contains("note.php"));
+	Assert.assertTrue("Note is not updated",isDisplayed(details.notecon));
+
+}
+@Given("User click the linked files in invoice")
+public void user_click_the_linked_files_in_invoice() {
+click(details.link2);
+Assert.assertTrue(getUrl().contains("document.php"));
+
+}
+@Given("User adding new invoice files {string}")
+public void user_adding_new_invoice_files(String file2) throws AWTException {
+  click(details.plusbtn);
+uploadFile(details.uploadarea,file2);
+closedialog();
+}
+@Given("Click the upload button in invoice")
+public void click_the_upload_button_in_invoice() {
+    click(details.upload);
+String uploadfile=getText(details.uploadfile);
+Assert.assertTrue(uploadfile.contains("crm2.png"));
+	}
+
+
+
+@Given("User click the event in invoice")
+public void user_click_the_event_in_invoice() {
+waitforpageload();
+scrollToElement(details.agent);
+		
+click(details.agent);
+Assert.assertTrue(getUrl().contains("agenda.php"));
+
+}
+@Then("User went back to list in invoice")
+public void user_went_back_to_list_in_invoice() {
+    click(details.backlist1);
+}
+
+@Given("User is on list in invoice")
+public void user_is_on_list_in_invoice() {
+	click(details.listhe);
+    Assert.assertTrue(getUrl().contains("list.php"));
+}
+@When("User select the one invoice")
+public void user_select_the_one_invoice() {
+        click(details.listidd);
+	Assert.assertTrue(validateElement(details.listidd));
+
+}
+@When("User select an action in invoice")
+public void user_select_an_action_in_invoice() {
+waitforpageload();
+scrollToElement(details.vali);
+		click(details.vali);
+		click(details.listdeletedraft);
+
+
+}
+@When("User click the confirm button in invoice")
+public void user_click_the_confirm_button_in_invoice() {
+click(details.confirma);
+}
+@When("User select yes in invoice dd")
+public void user_select_yes_in_invoice_dd() {
+selectDropdownByVisibleText(details.drop6,"Yes");
+}
+@When("User click the validate btn in invoice")
+public void user_click_the_validate_btn_in_invoice() {
+    click(details.vlid);
+}
+@Then("The record is deleted successfully in invoice")
+public void the_record_is_deleted_successfully_in_invoice() {
+	
+String actual=getToastMessage(details.inverror);
+Assert.assertTrue(actual.contains("Record deleted"));
+    
+}
+
+
+@Given("User is on draft in invoice")
+public void user_is_on_draft_in_invoice() {
+	click(details.listdraft);
+Assert.assertTrue(getUrl().contains("customers_bills_draft"));
+}
+@When("User select the one draft item in invoice")
+public void user_select_the_one_draft_item_in_invoice() {
+            click(details.listidraft);
+	Assert.assertTrue(validateElement(details.listidraft));
+
+}
+@When("User select an action in invoicee")
+public void user_select_an_action_in_invoicee() {
+waitforpageload();
+scrollToElement(details.vali);
+		click(details.vali);
+		click(details.listvalidate);
+
+}
+@When("User click the confirm button in invoicee")
+public void user_click_the_confirm_button_in_invoicee() {
+click(details.confirma);
+
+}
+@Then("The record is validated successfully in invoice")
+public void the_record_is_validated_successfully_in_invoice() {
+	String validate=getToastMessage(details.errormessage);
+
+Assert.assertTrue(validate.contains("to be validated"));
+
+}
+
+
+@Given("User is on paid item page")
+public void user_is_on_paid_item_page() {
+	click(details.paid);
+        Assert.assertTrue(getUrl().contains("customers_bills_paid"));
+
+}
+@When("User select the one paid item")
+public void user_select_the_one_paid_item() {
+            click(details.listpaid);
+	Assert.assertTrue(validateElement(details.listpaid));
+
+
+}
+@When("User select an action in paid")
+public void user_select_an_action_in_paid() {
+    waitforpageload();
+scrollToElement(details.vali);
+		click(details.vali);
+		click(details.listdeletedraft);
+
+}
+@When("User click the confirm button in paid")
+public void user_click_the_confirm_button_in_paid() {
+    click(details.confirma);
+
+}
+@When("User select yes in dropd in paid")
+public void user_select_yes_in_dropd_in_paid() {
+selectDropdownByVisibleText(details.drop6,"Yes");
+
+}
+@When("User click the validate btn in paid")
+public void user_click_the_validate_btn_in_paid() {
+        click(details.vlid);
+
+}
+@Then("The record is deleted successfully in paid")
+public void the_record_is_deleted_successfully_in_paid() {
+	String actual=getToastMessage(details.inverror);
+	Assert.assertTrue(actual.endsWith("record deleted"));
+
+}
+
+
+@Given("User is on abandoned in invoice")
+public void user_is_on_abandoned_in_invoice() {
+	click(details.Abandoned);
+    Assert.assertTrue(getUrl().contains("customers_bills_canceled"));
+}
+@When("User select the one abandoned item")
+public void user_select_the_one_abandoned_item() {
+                click(details.listaban);
+	Assert.assertTrue(validateElement(details.listaban));
+
+}
+@When("User select an action in abandoned")
+public void user_select_an_action_in_abandoned() {
+        waitforpageload();
+scrollToElement(details.vali);
+		click(details.vali);
+		click(details.listvalidate);
+
+
+}
+@When("User click the confirm button in abandoned")
+public void user_click_the_confirm_button_in_abandoned() {
+    click(details.confirma);
+
+}
+@Then("The record is validated successfully in abandoned")
+public void the_record_is_validated_successfully_in_abandoned() {
+	String validate=getToastMessage(details.inverror);
+
+Assert.assertTrue(validate.contains("to be validated"));
+
+}
+
+@Given("User is on list of templates page")
+public void user_is_on_list_of_templates_page(){
+click(details.template);
+Assert.assertTrue(getUrl().contains("invoicetemplate"));
+
+Assert.assertTrue("Template heading is not displayed",isDisplayed(details.templatehead));
+}
+
+
+@When ("User select one template")
+public void user_select_one_template(){
+click(details.templateid);
+Assert.assertTrue(getUrl().contains("card.php?action"));
+
+}
+@And ("User select the type in templates")
+public void user_select_the_type_in_templates(){
+click(details.down2);
+	}
+
+
+@And ("User click the payment method as {string}")
+public void user_click_the_payment_method_as(String cash){
+click(details.method);
+	if(cash.equalsIgnoreCase("Cash")) {
+			click(details.cash);
+}
+}
+@And ("User select the default bank account as {string}")
+public void user_select_the_default_bank_account_as(String bank){
+click(details.defaultbank);
+		if(bank.equalsIgnoreCase("Bank bs6tu")) {
+			click(details.default1);
+		}
+
+}
+@And ("User select the category as {string}")
+public void user_select_the_category_as(String cate){
+
+click(details.cate2);
+		if(cate.equalsIgnoreCase("Leistung")) {
+			click(details.leiung);
+		}
+}
+@And ("User enter the publicc note as {string}")
+public void user_enter_the_publicc_note_as(String note5){
+
+sendKeys(details.pubnote,note5);
+}
+@Then ("User click the create draft in template")
+public void user_click_the_create_draft_in_template(){
+click(details.creatdraft);
+}
+
+
+@Given("User is on customer invoice page in templates")
+public void user_is_on_customer_invoice_page_in_templates()
+ {
+	
+	Assert.assertTrue(getUrl().contains("card.php"));
+}
+@When("User select the type in templates  {string}")
+public void user_select_the_type_in_templates(String prdd)
+ {
+	selectDropdownByVisibleText(details.typeven,prdd);
+}
+@And ("User enter the description in templates as {string}")
+public void user_enter_the_description_in_templates_as(String desc2) {
+	switchToFrame(details.descframe);
+	click(details.descframe2);
+	sendKeys(details.descframe2,desc2);
+	switchback();
+
+}
+@And ("User enter the unit in templates as {string}")
+public void user_enter_the_unit_in_templates_as(String unit4) {
+	sendKeys(details.price3,unit4);
+}
+@And ("User select quantity in templates as {string}")
+public void user_select_quantity_in_templates_as(String qty2) {
+	sendKeys(details.quantity,qty2);
+}
+
+@And ("User select the discount in templates as {string}")
+public void user_select_the_discount_in_templates_as(String dis1) {
+	sendKeys(details.discount,dis1);
+}
+@And ("User click add button in templates")
+public void user_click_add_button_in_templates() {
+	click(details.add);
+}
+@And ("User click the validate button in templates")
+public void user_click_the_validate_button_in_templates() {
+	click(details.validd);
+	click(details.yes2);
+
+}
+@Then("the price is validated in templates")
+public void the_price_is_validated_in_templates() 
+ {
+	Assert.assertTrue(getUrl().contains("facid"));
+}
+
+
+@Given("User is on contact page in template")
+public void user_is_on_contact_page_in_template() {
+click(details.contact);
+Assert.assertTrue(getUrl().contains("contact.php"));
+
+}
+@Given("User click the add button in template")
+public void user_click_the_add_button_in_template() {
+    click(details.add2);
+}
+@Given("User click the notes in template")
+public void user_click_the_notes_in_template() {
+	click(details.note3);
+	Assert.assertTrue(getUrl().contains("note.php"));
+	Assert.assertTrue("Note is not updated",isDisplayed(details.templatenotes));
+
+}
+@Given("User click the linked files in template")
+public void user_click_the_linked_files_in_template() {
+click(details.link2);
+Assert.assertTrue(getUrl().contains("document.php"));
+
+}
+@Given("User adding new template files {string}")
+public void user_adding_new_template_files(String file3)  throws AWTException {
+  click(details.plusbtn);
+uploadFile(details.uploadarea,file3);
+closedialog();
+}
+@Given("Click the upload button in template")
+public void click_the_upload_button_in_template() {
+    click(details.upload);
+String uploadfile=getText(details.uploadfile);
+Assert.assertTrue(uploadfile.contains("crm2.png"));
+	}
+
+@Given("User click the event in template")
+public void user_click_the_event_in_template() {
+waitforpageload();
+scrollToElement(details.agent);
+		
+click(details.agent);
+Assert.assertTrue(getUrl().contains("agenda.php"));
+
+}
+@Then("User went back to list in template")
+public void user_went_back_to_list_in_template() {
+    click(details.backlist1);
+}
+
+@Given("User is on payment page")
+public void user_is_on_payment_page() {
+    click(details.payments);
+Assert.assertTrue(getUrl().contains("customers_bills_payment"));
+}
+@When("User validate the payment page heading")
+public void user_validate_the_payment_page_heading() {
+    Assert.assertTrue("Payment heading is not displayed",isDisplayed(details.paymenthead));
+}
+@When("User select one payment id")
+public void user_select_one_payment_id() {
+	click(details.paymentid);
+}
+
+@When("User check the payment page")
+public void user_check_the_payment_page() {
+   Assert.assertTrue(getUrl().contains("paiement")); 
+}
+@When("User check the log")
+public void user_check_the_log() {
+	click(details.paylog);
+	Assert.assertTrue(getUrl().contains("info.php")); 
+}
+
+@When("User check the linked filess")
+public void user_check_the_linked_filess() {
+	click(details.paylinked);
+	Assert.assertTrue(getUrl().contains("document.php"));
+}
+    
+
+@When("User add the new file {string}")
+public void user_add_the_new_file(String file6) throws AWTException {
+	click(details.plusbtn);
+	uploadFile(details.uploadarea,file6);
+	closedialog();
+}
+
+@Given("Click the upload button in payment")
+public void click_the_upload_button_in_payment() {
+    click(details.upload);
+String uploadfile=getText(details.uploadfile);
+Assert.assertTrue(uploadfile.contains("crm2.png"));
+	}
+    
+
+@Then("User went back to listt")
+public void user_went_back_to_listt() {
+	 click(details.backlist1);
+}
+
+@And ("User create reporting")
+public void user_create_reporting() {
+	click(details.reporting);
+	Assert.assertTrue(getUrl().contains("rapport.php"));
+}
+@Then ("user create the new report")
+public void uer_create_the_new_report() {
+	
+	click(details.generate);
+	
+}
+
+
+@Given("User is on statistics page in customer invoice")
+public void user_is_on_statistics_page_in_customer_invoice() {
+click(details.statiscus);
+Assert.assertTrue(getUrl().contains("stats"));
+
+}
+@Given("User select the thirdparty in statistics {string}")
+public void user_select_the_thirdparty_in_statistics(String name) {
+if(name.equals("Ajmal")) {
+		   selectCustomdd(details.thirdparty,details.ajmal);
+	   }
+	   
+	String expected=name;
+	String actual=getText(details.thirdparty);
+	Assert.assertEquals(expected,actual);
+
+}
+@Given("User select the thirdparty type in statistics {string}")
+public void user_select_the_thirdparty_type_in_statistics(String type1) {
+if(type1.equals("Other")) {
+selectCustomdd(details.thirdtype,details.thirdtype2);
+		   }
+		   
+		String expected=type1;
+		String actual=getText(details.thirdtype);
+		Assert.assertEquals(expected,actual);
+
+}
+@Given("User select the category customer as {string}")
+public void user_select_the_category_customer_as(String  categ) {
+
+selectCustomdd(details.tagcat,details.ama);
+		  }
+@Given("User select the category customer invoice {string}")
+public void user_select_the_category_customer_invoice(String cust) {
+
+selectCustomdd(details.tagcat2,details.servic);
+		  
+
+}
+@Given("User select the created by {string}")
+public void user_select_the_created_by(String  name2) {
+if(name2.equals("David Doe")) {
+selectCustomdd(details.createdby,details.david);
+		   }
+		   
+		String expected=name2;
+		String actual=getText(details.createdby);
+		Assert.assertEquals(expected,actual);
+
+}
+@Given("User select the status as {string}")
+public void user_select_the_status_as(String sta4) {
+if(sta4.equals("Paid")) {
+selectCustomdd(details.statussta,details.statussta2);
+		   }
+		   
+		String expected=sta4;
+		String actual=getText(details.statussta);
+		Assert.assertEquals(expected,actual);
+
+
+}
+@Then("the click the refresh button in statistics")
+public void the_click_the_refresh_button_in_statistics() {
+click(details.refresh);
+}
+
+
+@Given("User is on donation page")
+public void user_is_on_donation_page() {
+	click(details.donation);
+	Assert.assertTrue(getUrl().contains("donations"));
+}
+@Given("User verify the donation heading")
+public void user_verify_the_donation_heading() {
+	Assert.assertTrue("Donation heading is not displayed",isDisplayed(details.donhead));
+	Assert.assertTrue("Statistis heading is not displayed",isDisplayed(details.donhead2));
+}
+@When("User clicks the new donation button")
+public void user_clicks_the_new_donation_button() {
+    click(details.newdonation);
+    Assert.assertTrue("New Donation heading is not displayed",isDisplayed(details.donationhead));
+}
+@When("User select the date in donation")
+public void user_select_the_date_in_donation() {
+	click(details.datenew);
+}
+@When("User enter the amount {string}")
+public void user_enter_the_amount(String amount1) {
+	click(details.donamount);
+	if(!amount1.trim().isEmpty()) {
+	sendKeys(details.donamount,amount1);
+	}
+	
+}
+@When("User enter the company {string}")
+public void user_enter_the_company(String company) {
+	sendKeys(details.doncompany,company);
+}
+@When("User enter the lastname in donation {string}")
+public void user_enter_the_lastname_in_donation(String lastname1) {
+	sendKeys(details.donlast,lastname1);
+    
+}
+@When("User enter the firstname in donation {string}")
+public void user_enter_the_firstname_in_donation(String firstname1) {
+	sendKeys(details.donfirst,firstname1);
+}
+@When("User enter the address in donation {string}")
+public void user_enter_the_address_in_donation(String address) {
+	sendKeys(details.donaddress,address);
+}
+
+@And ("User select the country in donation")
+public void uer_select_the_country_in_donation() {
+	selectCustomdd(details.doncountry,details.india2);
+}
+@When("User enter the zipcode in donation {string}")
+public void user_enter_the_zipcode_in_donation(String zip) {
+	sendKeys(details.donzip,zip);
+}
+@When("User enter the email in donation {string}")
+public void user_enter_the_email_in_donation(String email1) {
+	sendKeys(details.email2,email1);
+}
+@When("User enter the note in public as {string}")
+public void user_enter_the_note_in_public_as(String notepub){
+	sendKeys(details.publicnote,notepub);
+}
+@When("User enter the note is private as {string}")
+public void user_enter_the_note_is_private_as(String notepri){
+	sendKeys(details.donprinote,notepri);
+    
+}
+@When("User click the save button")
+public void user_click_the_save_button() {
+	click(details.donsave);
+    
+}
+@Then("Verify the donation creation result {string}")
+public void verify_the_donation_creation_result(String result5) {
+	
+	if(result5.equalsIgnoreCase("Success")) {
+		Assert.assertTrue(getUrl().contains("card.php"));
+	}else {
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("Field 'Amount' is required"));
+		
+	}
+}
+
+
+@Given("User is on new donation page")
+public void user_is_on_new_donation_page() {
+	Assert.assertTrue(getUrl().contains("card.php?id"));
+    
+}
+@Given("User validate the new donation")
+public void user_validate_the_new_donation() {
+	click(details.pomie);
+}
+@Given("User click the notes in donation")
+public void user_click_the_notes_in_donation() {
+	click(details.note3);
+	Assert.assertTrue(getUrl().contains("note.php"));
+	Assert.assertTrue("Note is not updated",isDisplayed(details.donnotecheck));
 
 	
 }
+@Given("User click the linked files in donation")
+public void user_click_the_linked_files_in_donation() {
+	click(details.link2);
+	Assert.assertTrue(getUrl().contains("document.php"));
+
+}
+@Given("User adding new donation files {string}")
+public void user_adding_new_donation_files(String file5)throws AWTException  {
+	  click(details.plusbtn);
+	  uploadFile(details.uploadarea,file5);
+	  closedialog();
+}
+
+
+@Given("Click the upload button in donation")
+public void click_the_upload_button_in_donation() {
+	click(details.upload);
+	String uploadfile=getText(details.uploadfile);
+	Assert.assertTrue(uploadfile.contains("crm2.png"));
+
+}
+@Given("User click the log in donation")
+public void user_click_the_log_in_donation() {
+	waitforpageload();
+	click(details.donlog);
+	Assert.assertTrue(getUrl().contains("info.php"));
+    
+}
+@Then("User went back to list in donation")
+public void user_went_back_to_list_in_donation() {
+	click(details.backlist1);
+}
+
+@Given("User is on list in donation")
+public void user_is_on_list_in_donation() {
+    click(details. donationlist);
+    Assert.assertTrue(getUrl().contains("list.php"));
+
+}
+@When("User select the one donation")
+public void user_select_the_one_donation() {
+click(details.donlistid);
+	Assert.assertTrue(validateElement(details.donlistid));
+    
+}
+@When("User select an action in donation")
+public void user_select_an_action_in_donation() {
+    waitforpageload();
+scrollToElement(details.vali);
+		click(details.vali);
+		click(details.donlistdelete);
+
+}
+@When("User click the confirm button in donation")
+public void user_click_the_confirm_button_in_donation() {
+click(details.confirma);
+
+}
+@When("User select yes in donation dd")
+public void user_select_yes_in_donation_dd() {
+    selectDropdownByVisibleText(details.drop6,"Yes");
+
+}
+@When("User click the validate btn in donation")
+public void user_click_the_validate_btn_in_donation() {
+    click(details.vlid);
+}
+@Then("The record is deleted successfully in donation")
+public void the_record_is_deleted_successfully_in_donation() {
+String actual=getToastMessage(details.inverror);
+Assert.assertTrue(actual.contains("Record deleted"));
+
+    
+}
+
+
+@Given("User is on payment page in donation")
+public void user_is_on_payment_page_in_donation() {
+click(details.donpayments);
+Assert.assertTrue(getUrl().contains("donations"));
+
+}
+@Given("User validate the payment page")
+public void user_validate_the_payment_page() {
+Assert.assertTrue("Payment heading is not displayed",isDisplayed(details.payheading));
+
+    
+}
+@When("User licks the ref sorting icon")
+public void user_licks_the_ref_sorting_icon() {
+    click(details.refsort);
+}
+@Then("Ref column should sorting in acending order")
+public void ref_column_should_sorting_in_acending_order() {
+Assert.assertTrue(getUrl().contains("sortfield=pd.rowid&sortorde"));
+click(details.refsort);
+}
+@Then("User select one payment id in donation")
+public void user_select_one_payment_id_in_donation() {
+click(details.paylistid);
+}
+@Then("User check the donation payment page")
+public void user_check_the_donation_payment_page() {
+Assert.assertTrue(getUrl().contains("card.php?id"));
+click(details.insideid);
+}
+@Then("User check the linked files in donation")
+public void user_check_the_linked_files_in_donation() {
+click(details.paylinked);
+	Assert.assertTrue(getUrl().contains("document.php"));
+
+}
+@Then("User add the new file in {string}")
+public void user_add_the_new_file_in(String  file7) throws AWTException {
+click(details.plusbtn);
+	uploadFile(details.uploadarea,file7);
+	closedialog();
+
+}
+@Then("Click the upload button in donation payment")
+public void click_the_upload_button_in_donation_payment() {
+        click(details.upload);
+String uploadfile=getText(details.uploadfile);
+Assert.assertTrue(uploadfile.contains("crm2.png"));
+
+}
+@Then("User click the notes in donation payment")
+public void user_click_the_notes_in_donation_payment() {
+click(details.note2);
+Assert.assertTrue(getUrl().contains("note.php"));
+
+}
+@Then("User enter the new notes in donation as {string}")
+public void user_enter_the_new_notes_in_donation_as(String notes4)  {
+    click(details.publicedit);
+		click(details.text2);
+		sendKeys(details.text2,notes4);
+click(details.notesave);
+
+}
+@Then("User check the log in donation payment")
+public void user_check_the_log_in_donation_payment() {
+    click(details.paylog);
+Assert.assertTrue(getUrl().contains("info.php")); 
+
+}
+@Then("User went back to list in donation payment")
+public void user_went_back_to_list_in_donation_payment() {
+    click(details.backlist1);
+}
+
+@Given("User is on statistics page in donation")
+public void user_is_on_statistics_page_in_donation() {
+    click(details.donstate);
+Assert.assertTrue(getUrl().contains("stats"));
+
+}
+@Given("User select the thirdparty type in donation statis {string}")
+public void user_select_the_thirdparty_type_in_donation_statis(String  type7 ) {
+  if(type7.equals("Other")) {
+selectCustomdd(details.thirdtype,details.thirdtype2);
+		   }
+		   
+		String expected=type7;
+		String actual=getText(details.thirdtype);
+		Assert.assertEquals(expected,actual);
+  
+}
+@Given("User select the category customer in statis")
+public void user_select_the_category_customer_in_statis(){
+selectCustomdd(details.tagcat,details.ama2);
+}
+
+@Given("User select the created by in donation statis {string}")
+public void user_select_the_created_by_in_donation_statis(String name3){
+    if(name3.equals("David Doe")) {
+selectCustomdd(details.createdby,details.david);
+		   }
+		   
+		String expected=name3;
+		String actual=getText(details.createdby);
+		Assert.assertEquals(expected,actual);
+
+}
+@Given("User select the status as in donation statis {string}")
+public void user_select_the_status_as_in_donation_statis(String sta5) {
+if(sta5.equals("Draft promise")) {
+	
+selectCustomdd(details.donstatus,details.draftstatus);
+		   }
+		   
+		String expected=sta5;
+		String actual=getText(details.donstatus);
+		Assert.assertEquals(expected,actual);
+
+}
+@Then("the click the refresh button in donation statistics")
+public void the_click_the_refresh_button_in_donation_statistics() {
+click(details.refresh);
+}
+
+
+@Given("User is on list in salaries")
+public void user_is_on_list_in_salaries() {
+click(details.salary);
+  Assert.assertTrue(getUrl().contains("salaries"));
+
+}
+@Given("User validate the list page in salaries")
+public void user_validate_the_list_page_in_salaries() {
+Assert.assertTrue("Payment heading is not displayed",isDisplayed(details.salheading));
+}
+@When("User licks the ref sorting icon in list")
+public void user_licks_the_ref_sorting_icon_in_list() {
+	doubleClick(details.refsalary);
+}
+@Then("Ref column should sorting in acending in list")
+public void ref_column_should_sorting_in_acending_in_list() {
+Assert.assertTrue(getUrl().contains("sortfield"));
+}
+@When("User select the one salaries")
+public void user_select_the_one_salaries() {
+    click(details.sallistid);
+	Assert.assertTrue(validateElement(details.sallistid));
+
+}
+@When("User select an action in salaries")
+public void user_select_an_action_in_salaries() {
+waitforpageload();
+scrollToElement(details.vali);
+		click(details.vali);
+		click(details.donlistdelete);
+
+}
+@When("User click the confirm button in salaries")
+public void user_click_the_confirm_button_in_salaries() {
+click(details.confirma);
+    
+}
+@When("User select yes in salaries dd")
+public void user_select_yes_in_salaries_dd() {
+selectDropdownByVisibleText(details.drop6,"Yes");
+}
+@When("User click the validate btn in salaries")
+public void user_click_the_validate_btn_in_salaries() {
+click(details.vlid);
+    
+}
+@Then("The record is deleted successfully in salaries")
+public void the_record_is_deleted_successfully_in_salaries() {
+String actual=getToastMessage(details.inverror);
+Assert.assertTrue(actual.contains("record deleted"));
+
+    
+}
+
+
+@Given("User is on payment page in salaries")
+public void user_is_on_payment_page_in_salaries() {
+    click(details.donpayments);
+Assert.assertTrue(getUrl().contains("payments.php"));
+
+}
+@Given("User validate the payment page in salaries")
+public void user_validate_the_payment_page_in_salaries() {
+Assert.assertTrue("Payment heading is not displayed",isDisplayed(details.salpayheading));
+}
+@When("User licks the ref sorting icon in payment")
+public void user_licks_the_ref_sorting_icon_in_payment() {
+	doubleClick(details.refsort);
+}
+@Then("Ref column should sorting in acending in payment")
+public void ref_column_should_sorting_in_acending_in_payment() {
+  Assert.assertTrue(getUrl().contains("sortfield=s.rowid&sortorder"));  
+}
+@Then("User select one payment id in salaries")
+public void user_select_one_payment_id_in_salaries() {
+click(details.salpayid);
+}
+@Then("User check the salaries payment page")
+public void user_check_the_salaries_payment_page() {
+Assert.assertTrue(getUrl().contains("card.php?id"));
+click(details.salpayinsideid);
+
+}
+@Then("User check the credit transfer page")
+public void user_check_the_credit_transfer_page() {
+click(details.creittrans);
+Assert.assertTrue(getUrl().contains("virement_request.php"));
+
+}
+@Then("User check the linked files in salaries")
+public void user_check_the_linked_files_in_salaries() {
+click(details.paylinked);
+	Assert.assertTrue(getUrl().contains("document.php"));
+
+}
+
+@Then("User check the log in salaries payment")
+public void user_check_the_log_in_salaries_payment() {
+  click(details.paylog);
+Assert.assertTrue(getUrl().contains("info.php"));
+
+}
+@Then("User went back to list in salaries payment")
+public void user_went_back_to_list_in_salaries_payment() {
+click(details.backlist1);
+}
+
+
+
+
+@Given("User is on statistics page in salaries")
+public void user_is_on_statistics_page_in_salaries() {
+click(details.donstate);
+Assert.assertTrue(getUrl().contains("stats"));
+
+}
+@Given("User select the year")
+public void user_select_the_year() {
+	click(details.salyear);
+}
+@Then("the click the refresh button in salaries statistics")
+public void the_click_the_refresh_button_in_salaries_statistics() {
+click(details.refresh);
+    
+}
+
+
+@Given("User is on loan page")
+public void user_is_on_loan_page() {
+click(details.loan);
+Assert.assertTrue(getUrl().contains("loan"));
+
+}
+@Given("User verify the loan heading")
+public void user_verify_the_loan_heading() {
+Assert.assertTrue("Loan heading is not displayed",isDisplayed(details. loanheading));
+    }
+@When("User clicks the new loan button")
+public void user_clicks_the_new_loan_button() {
+click(details.newloan);
+    Assert.assertTrue("New Loan heading is not displayed",isDisplayed(details. loadheading));
+
+}
+@When("User enter the label {string}")
+public void user_enter_the_label(String  label) {
+    click(details.loanlabel);
+	if(!label.trim().isEmpty()) {
+	sendKeys(details.loanlabel,label);
+	}
+
+}
+@When("User enter the bank account {string}")
+public void user_enter_the_bank_account(String  account) {
+if(!account.trim().isEmpty()) {
+			click(details.bankacc);
+		}if(account.equalsIgnoreCase("Account")) {
+			click(details.bankacc1);
+		}
+		   
+		 String expected=account;
+		String actual=getText(details.bankacc);
+		Assert.assertEquals(expected,actual);
+	
+
+}
+@When("User enter the capital {string}")
+public void user_enter_the_capital(String  capital) {
+click(details.capital);
+	if(!capital.trim().isEmpty()) {
+	sendKeys(details.capital,capital);
+	}
+
+}
+@When("User enter the start date")
+public void user_enter_the_start_date() {
+    click(details.start);
+}
+@When("User enter the End date")
+public void user_enter_the_end_date() {
+click(details.end);
+}
+@When("User enter the number of terms {string}")
+public void user_enter_the_number_of_terms(String  terms) {
+click(details.loanterms);
+	if(!terms.trim().isEmpty()) {
+	sendKeys(details.loanterms,terms);
+	}
+
+}
+@When("User enter the rate {string}")
+public void user_enter_the_rate(String rate) {
+click(details.loanrate);
+	if(!rate.trim().isEmpty()) {
+	sendKeys(details.loanrate,rate);
+	}
+
+    
+}
+
+@And ("User enter the insurance amount as {string}")
+public void user_enter_the_insurance_amount_as(String insurance) {
+	sendKeys(details.insurance,insurance);
+}
+@When("User enter the note in publoan as {string}")
+public void user_enter_the_note_in_publoan_as(String  note8) {
+sendKeys(details.publicnote,note8);
+}
+@When("User enter the note is priloan as {string}")
+public void user_enter_the_note_is_priloan_as(String note9) {
+sendKeys(details.donprinote,note9);
+}
+@When("User select the account insurance {string}")
+public void user_select_the_account_insurance(String  accins) {
+if(!accins.trim().isEmpty()) {
+			click(details.accinsurance);
+		}if(accins.equalsIgnoreCase("106 - Réserves")) {
+			click(details.accins1);
+		}
+		   
+		 String expected=accins;
+		String actual=getText(details.accinsurance);
+		Assert.assertEquals(expected,actual);
+    
+}
+@When("User select the account interest {string}")
+public void user_select_the_account_interest(String  accint) {
+if(!accint.trim().isEmpty()) {
+			click(details.accint);
+		}if(accint.equalsIgnoreCase("101 - Capital")) {
+			click(details.accint1);
+		}
+		   
+		 String expected=accint;
+		String actual=getText(details.accint);
+		Assert.assertEquals(expected,actual);
+
+}
+@When("User click the add button in loan")
+public void user_click_the_add_button_in_loan() {
+  click(details.addbtn);  
+}
+
+@Then ("Verify the loan creation result {string}")
+public void verify_the_loan_creation_result(String result6){
+if(result6.equalsIgnoreCase("Success")) {
+		Assert.assertTrue(getUrl().contains("card.php"));
+	}else {
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("is required"));
+		
+	}
+}
+
+
+@Given("User is on card page in loan")
+public void user_is_on_card_page_in_loan() {
+click(details.card);
+Assert.assertTrue(getUrl().contains("card.php"));
+
+}
+@Given("User click the modify button in loan")
+public void user_click_the_modify_button_in_loan() {
+click(details.modifyloan);
+}
+@Given("User modify the rate and save {string}")
+public void user_modify_the_rate_and_save(String rate1) {
+ click(details.loanrate);
+sendKeys(details.loanrate,rate1);   
+click(details.loansave);
+}
+@Given("User click the financial commitment")
+public void user_click_the_financial_commitment() {
+	click(details.finanacial);
+	Assert.assertTrue(getUrl().contains("schedule.php"));
+}
+@Given("User click create button in finance")
+public void user_click_create_button_in_finance() {
+
+ click(details.creatloan);
+}
+@Given("User click the linked files in loan")
+public void user_click_the_linked_files_in_loan() {
+	waitforpageload();
+click(details.link2);
+Assert.assertTrue(getUrl().contains("document.php"));
+
+}
+@Given("User adding new loan files {string}")
+public void user_adding_new_loan_files(String  file10) throws AWTException {
+click(details.plusbtn);
+uploadFile(details.uploadarea,file10);
+closedialog();
+
+}
+@Given("Click the upload button in loan")
+public void click_the_upload_button_in_loan() {
+click(details.upload);
+String uploadfile=getText(details.uploadfile);
+Assert.assertTrue(uploadfile.contains("crm2.png"));
+
+}
+@Given("User click the notes in loan")
+public void user_click_the_notes_in_loan() {
+click(details.note3);
+	Assert.assertTrue(getUrl().contains("note.php"));
+	Assert.assertTrue("Note is not updated",isDisplayed(details.notecheck));
+
+}
+@Given("User click the log in loan")
+public void user_click_the_log_in_loan() {
+waitforpageload();
+	click(details.donlog);
+	Assert.assertTrue(getUrl().contains("info.php"));
+
+}
+@Then("User went back to list in loan")
+public void user_went_back_to_list_in_loan() {
+    click(details.backlist1);
+}
+
+
+
+@Given("User is on miscellaneous payment page")
+public void user_is_on_miscellaneous_payment_page() {
+click(details.mispay);
+Assert.assertTrue(getUrl().contains("compta"));
+
+}
+@Given("User verify the miscellaneous heading")
+public void user_verify_the_miscellaneous_heading() {
+Assert.assertTrue("Loan heading is not displayed",isDisplayed(details.mispayhead));
+}
+@When("User clicks the new miscellaneous button")
+public void user_clicks_the_new_miscellaneous_button() {
+click(details.newpay);
+Assert.assertTrue("New Loan heading is not displayed",isDisplayed(details.newpayhead));
+
+    
+}
+@When("User enter the date of payment")
+public void user_enter_the_date_of_payment() {
+click(details.datenew1);
+}
+@When("User enter the value date")
+public void user_enter_the_value_date() {
+click(details.datenew2);
+}
+
+@And ("User enter the amount in mis {string}")
+public void user_enter_the_amount_in_mis(String amount) {
+	click(details.mismaount);
+	if(!amount.trim().isEmpty()) {
+	sendKeys(details.mismaount,amount);
+	}
+}
+@When("User select the bank account {string}")
+public void user_select_the_bank_account(String bankacc) {
+ 
+if(!bankacc.trim().isEmpty()) {
+			click(details.bankacc);
+		}if(bankacc.equalsIgnoreCase("Account (EUR)")) {
+			click(details.bankaccount);
+		}
+		   
+		 String expected=bankacc;
+		String actual=getText(details.bankacc);
+		Assert.assertEquals(expected,actual);
+
+}
+@When("User select the method {string}")
+public void user_select_the_method(String paymethod) {
+click(details.paymethod1);
+		if(paymethod.equalsIgnoreCase("Cash")) {
+			click(details.paycash);
+		}else
+			if(paymethod.equalsIgnoreCase("Check")){
+				click(details.paycheck);
+			}
+
+}
+@When("User enter the cheque number as {string}")
+public void user_enter_the_cheque_number_as(String  checknum) {
+click(details.numberpay);
+	if(!checknum.trim().isEmpty()) {
+	sendKeys(details.numberpay,checknum);
+
+}
+}
+@When("User enter the sender {string}")
+public void user_enter_the_sender(String sender) {
+click(details.sender);
+	if(!sender.trim().isEmpty()) {
+	sendKeys(details.sender,sender);
+
+}
+}
+@When("User enter the bank {string}")
+public void user_enter_the_bank(String bank) {
+click(details.bankcheck);
+	if(!bank.trim().isEmpty()) {
+	sendKeys(details.bankcheck,bank);
+
+}
+}
+@When("User select the accounting account {string}")
+public void user_select_the_accounting_account(String accounting) {
+    if(!accounting.trim().isEmpty()) {
+			click(details.acc);
+		}if(accounting.equalsIgnoreCase("106 - Réserves")) {
+			click(details.acc1);
+		}
+		   
+		 String expected=accounting;
+		String actual=getText(details.acc);
+		Assert.assertEquals(expected,actual);
+
+}
+@When("User click the save button in mispay")
+public void user_click_the_save_button_in_mispay() {
+click(details.loansave);
+ 
+}
+@Then("Verify the miscellaneous creation result {string}")
+public void verify_the_miscellaneous_creation_result(String  result7) {
+if(result7.equalsIgnoreCase("Success")) {
+		Assert.assertTrue(getUrl().contains("list.php"));
+	}else {
+		String actual=getToastMessage(details.inverror);
+		Assert.assertTrue(actual.contains("is required"));
+		
+	}
+
+}
+
+
+
+@Given("User is on list in miscellanous")
+public void user_is_on_list_in_miscellanous() {
+click(details.mislist);
+  Assert.assertTrue(getUrl().contains("list.php"));
+
+}
+@Given("User validate the list page in miscellanous")
+public void user_validate_the_list_page_in_miscellanous() {
+Assert.assertTrue("Miscellanous heading is not displayed",isDisplayed(details. misheading));
+    
+}
+@When("User clicks the ref sorting icon in miscellanous")
+public void user_clicks_the_ref_sorting_icon_in_miscellanous() {
+doubleClick(details.refsalary);
+    
+}
+@Then("Ref column should sorting in acending in miscellanous")
+public void ref_column_should_sorting_in_acending_in_miscellanous() {
+Assert.assertTrue(getUrl().contains("sortfield"));
+}
+@When("User select the one miscellaneous in list")
+public void user_select_the_one_miscellaneous_in_list() {
+click(details.mislistid);
+}
+@When("User select the clone button in payment")
+public void user_select_the_clone_button_in_payment() {
+    click(details.clone);
+}
+@When("User click the confirm button in miscellanous")
+public void user_click_the_confirm_button_in_miscellanous() {
+    click(details.confiryes);
+}
+@When("User check the linked files in miscellanous")
+public void user_check_the_linked_files_in_miscellanous() {
+click(details.paylinked);
+	Assert.assertTrue(getUrl().contains("document.php"));
+
+    
+}
+@When("User add the new file in miscellanous {string}")
+public void user_add_the_new_file_in_miscellanous(String file8) throws AWTException {
+click(details.plusbtn);
+	uploadFile(details.uploadarea,file8);
+	closedialog();
+
+}
+
+
+
+@When("Click the upload button in miscellanous")
+public void click_the_upload_button_in_miscellanous() {
+    
+        click(details.upload);
+String uploadfile=getText(details.uploadfile);
+Assert.assertTrue(uploadfile.contains("crm2.png"));
+
+}
+
+@When("User check the log in miscellanous")
+public void user_check_the_log_in_miscellanous() {
+    click(details.paylog);
+Assert.assertTrue(getUrl().contains("info.php")); 
+
+}
+@Then("User went back to list in miscellanous")
+public void user_went_back_to_list_in_miscellanous() {
+click(details.backlist1);
+}
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
 
 
 

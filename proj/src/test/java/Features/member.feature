@@ -1,5 +1,7 @@
+@Meenu
 Feature: Validating CRM application
 
+@skip
 Scenario: Validating Statistics details
 Given user is on statistic page
 And User clicks the contribution
@@ -111,7 +113,7 @@ And User click the notification
 And User click the notes
 Then User go back to the main list
 
-@Meenu
+
 Scenario: Validating commerce area page
 Given User is on commerce area page
 And Verifying page headings 
@@ -304,7 +306,7 @@ And User select the vendor tagg "Albunes"
 And User select the category "xContainer"
 Then the click the refresh buttonn
 
-@Meenu
+
 Scenario: Validating billing area page
 Given User is on billing area page
 And Verifying invoice page headings 
@@ -312,4 +314,91 @@ When User clicks on customer invoice
 And Verifying customer invoice page
 And User clicks any draft invoice
 Then warning message should displayy
+
+
+Scenario Outline: Creating New Customer Invoice
+When User click the new invoice request
+Then New invoice creating page is open
+And User select the customer "<customer>"
+And User select thee type "<type1>"
+And User select the paymentt term "<term>"
+And User select the paymentt method "<method>"
+And User select the default bank "<default1>"
+And User select the source "<source>"
+And User select the tag "<tag1>"
+And User enter the public note as "This is customer invoice"
+And User enter the private note as "This is private invoice"
+And User clicks the create draft button in invoice
+Then New invoice will be created "<result5>"
+
+Examples:
+|customer      | type1       | term        | method |default1   | source  | tag1  | result5 |
+|              | Down Payment| 30 days     |Cash    |Bank bs6tu|Internet|Leistung | failure |
+|              | Down Payment|             |Check   |Bank bs6tu|Partner |Servicios| failure |
+|              | Down Payment| 30 days	   |Cash    | Bank bs6tu|Partner|Leistung | failure |
+|aqua         | Down Payment | Other      |Check   | Bank bs6tu|Internet|Leistung | Success |
+
+
+
+
+Scenario: Validating newly created invoice data 
+Given User is on price request page in invoice
+When User select the type in invoice  "Product"
+And User enter the description in invoice as "Sample proudct"
+And User enter the unit in invoice as "200"
+And User select quantity in invoice as "2"
+And User select the discount in invoice as "10"
+And User click add button in invoice
+And User click the validate button in invoice
+Then the price is validated in invoice
+
+
+Scenario: Verifying other details in new invoice data
+Given User is on contact page in invoice
+And User click the add button in invoice
+And User click the notes in invoice
+And User click the linked files in invoice
+And User adding new invoice files "D:\picture demo\crm2.PNG"
+And Click the upload button in invoice
+And User click the event in invoice	
+Then User went back to list in invoice
+
+
+
+Scenario: Validating list in invoice
+Given User is on list in invoice
+When User select the one invoice
+And User select an action in invoice
+And User click the confirm button in invoice
+And User select yes in invoice dd
+And User click the validate btn in invoice
+Then The record is deleted successfully in invoice
+
+
+Scenario: Validating Draft in invoice
+Given User is on draft in invoice
+When User select the one draft item in invoice
+And User select an action in invoicee
+And User click the confirm button in invoicee
+Then The record is validated successfully in invoice
+
+
+
+Scenario: Validating paid item in invoice
+Given User is on paid item page
+When User select the one paid item
+And User select an action in paid
+And User click the confirm button in paid
+And User select yes in dropd in paid
+And User click the validate btn in paid
+Then The record is deleted successfully in paid
+
+
+
+Scenario: Validating Abandoned in invoice
+Given User is on abandoned in invoice
+When User select the one abandoned item 
+And User select an action in abandoned
+And User click the confirm button in abandoned
+Then The record is validated successfully in abandoned
 
